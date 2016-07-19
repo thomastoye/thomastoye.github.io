@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Python LDAP authentication with Microsoft Active Directory | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="For a school project, we have to implement LDAP authentication in edX. edX is buildt on Django and Python, so I decided to explore how to implement LDAP with Python.
+I’m not a Microsoft fan, but to mi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python LDAP authentication with Microsoft Active Directory">
+<meta property="og:url" content="http://thomastoye.be/2015/ldap-with-python-and-ad/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="For a school project, we have to implement LDAP authentication in edX. edX is buildt on Django and Python, so I decided to explore how to implement LDAP with Python.
+I’m not a Microsoft fan, but to mi">
+<meta property="og:image" content="http://thomastoye.be/2015/ldap-with-python-and-ad/example.png">
+<meta property="og:image" content="http://thomastoye.be/add-ad-domain-services-role.png">
+<meta property="og:image" content="http://thomastoye.be/confirm-ad-domain-services.png">
+<meta property="og:image" content="http://thomastoye.be/promote-to-domain-controllers.png">
+<meta property="og:image" content="http://thomastoye.be/ads-create-new-forest.png">
+<meta property="og:image" content="http://thomastoye.be/new-user.png">
+<meta property="og:image" content="http://thomastoye.be/new-user-creation-window.png">
+<meta property="og:image" content="http://thomastoye.be/create-ou.png">
+<meta property="og:image" content="http://thomastoye.be/create-user-in-ou-1.png">
+<meta property="og:image" content="http://thomastoye.be/create-user-in-ou-2.png">
+<meta property="og:image" content="http://thomastoye.be/example.png">
+<meta property="og:updated_time" content="2016-04-26T08:14:35.751Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python LDAP authentication with Microsoft Active Directory">
+<meta name="twitter:description" content="For a school project, we have to implement LDAP authentication in edX. edX is buildt on Django and Python, so I decided to explore how to implement LDAP with Python.
+I’m not a Microsoft fan, but to mi">
+<meta name="twitter:image" content="http://thomastoye.be/2015/ldap-with-python-and-ad/example.png">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ldap-with-python-and-ad" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/ldap-with-python-and-ad/" class="article-date">
+  <time datetime="2015-04-02T10:00:00.000Z" itemprop="datePublished">2015-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Python LDAP authentication with Microsoft Active Directory
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>For a school project, we have to implement LDAP authentication in <a href="https://www.edx.org/" target="_blank" rel="external">edX</a>. edX is buildt on Django and Python, so I decided to explore how to implement LDAP with Python.</p>
+<p>I’m not a Microsoft fan, but to mirror the deployment set-up, we decided to use Microsoft Server with Active Directory.</p>
+<p><img src="/2015/ldap-with-python-and-ad/example.png" alt="An example of how it will work"></p>
+<a id="more"></a>
+<h1 id="The-Microsoft-Server"><a href="#The-Microsoft-Server" class="headerlink" title="The Microsoft Server"></a>The Microsoft Server</h1><p>I grabbed a copy of Microsoft Server 2012 from <a href="http://e5.onthehub.com/WebStore/ProductsByMajorVersionList.aspx?ws=cb64ac85-869b-e011-969d-0030487d8897" target="_blank" rel="external">DreamSpark/OnTheHub</a> for free (yay student benefits!) and after <a href="http://serverfault.com/questions/678164/windows-server-2012-r2-doesnt-find-virtio-drivers-when-installing-on-kvm" target="_blank" rel="external">some struggling</a>, managed to get it running on KVM.</p>
+<h2 id="Install-needed-roles"><a href="#Install-needed-roles" class="headerlink" title="Install needed roles"></a>Install needed roles</h2><p>First, install the Active Directory Domain Services role:</p>
+<p><img src="add-ad-domain-services-role.png" alt="Add the Active Directory Domain Services role to this Windows server"><br><img src="confirm-ad-domain-services.png" alt="Click on install, and it&#39;s go time!"></p>
+<p>After installing the role, promote the server to the domain controller:</p>
+<p><img src="promote-to-domain-controllers.png" alt="Click on the notification to start the promotion wizard"><br><img src="ads-create-new-forest.png" alt="Create a new forest. Since this is a test server, I&#39;ll use a .local domain."></p>
+<p>I did not set the server to provide DNS (under <em>Domain Controller Options</em>). I’ll set a static IP later, for now, I’ll just use the provided dynamic IP.</p>
+<p>I still had to install the VirtIO Ethernet driver, you can find this on the <a href="http://www.linux-kvm.org/page/WindowsGuestDrivers/Download_Drivers" target="_blank" rel="external">VirtIO drivers iso</a> that you probably used to install the HDD VirtIO drivers during the installation. Right-click on <code>NETKVM.INF</code> and choose <code>Install</code>.</p>
+<p>Note that you need <strong>not</strong> install Active Directory Lightweight Directory Services; you can query Active Directory just fine.</p>
+<h2 id="Testing-it-out"><a href="#Testing-it-out" class="headerlink" title="Testing it out"></a>Testing it out</h2><p>If you’re on a debian machine, you can use <code>sudo apt-get install python-ldap</code> to install the Python LDAP package. That way, you can <code>import ldap</code> from the console anywhere. In the next section, we will install <code>python-ldap</code> in a virtual environment.</p>
+<p>To try it out, grab the current IP of the Windows server (<code>ipconfig /all</code> in <code>cmd.exe</code>) and try this:</p>
+<pre><code>$ python
+Python 2.7.9 (default, Mar  1 2015, 12:57:24) 
+[GCC 4.9.2] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import ldap
+&gt;&gt;&gt; conn = ldap.initialize(&apos;ldap://192.168.122.64&apos;) # the IP address of the Windows Server
+&gt;&gt;&gt; conn.protocol_version = 3
+&gt;&gt;&gt; conn.set_option(ldap.OPT_REFERRALS, 0)
+</code></pre><p>Now try to authenticate:</p>
+<pre><code>&gt;&gt;&gt; conn.simple_bind_s(&apos;Administrator@mooctest.local&apos;, &apos;yourpassword&apos;) # an account to test
+(97, [], 2, [])
+</code></pre><p>This is what happens when specifying wrong credentials:</p>
+<pre><code>&gt;&gt;&gt; conn.simple_bind_s(&apos;Administrator@mooctest.local&apos;, &apos;wrongpassword&apos;)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 208, in simple_bind_s
+    resp_type, resp_data, resp_msgid, resp_ctrls = self.result3(msgid,all=1,timeout=self.timeout)
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 469, in result3
+    resp_ctrl_classes=resp_ctrl_classes
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 476, in result4
+    ldap_result = self._ldap_call(self._l.result4,msgid,all,timeout,add_ctrls,add_intermediates,add_extop)
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 99, in _ldap_call
+    result = func(*args,**kwargs)
+ldap.INVALID_CREDENTIALS: {&apos;info&apos;: &apos;80090308: LdapErr: DSID-0C0903C5, comment: AcceptSecurityContext error, data 52e, v23f0&apos;, &apos;desc&apos;: &apos;Invalid credentials&apos;}
+</code></pre><p>This was surprisingly easy so far! Let’s see how we can use more of the Python LDAP API.</p>
+<h1 id="Using-Python’s-LDAP-module"><a href="#Using-Python’s-LDAP-module" class="headerlink" title="Using Python’s LDAP module"></a>Using Python’s LDAP module</h1><h2 id="Getting-set-up"><a href="#Getting-set-up" class="headerlink" title="Getting set up"></a>Getting set up</h2><p>We’ll start a new project for this using <code>virtualenv</code>. You will need to install <code>libldap2-dev</code> and <code>libsasl2-dev</code> to install <code>python-ldap</code>, see <a href="http://stackoverflow.com/questions/4768446/python-cant-install-python-ldap" target="_blank" rel="external">this answer</a> for more information.</p>
+<pre><code>$ virtualenv python-ldap # create a new virtual environment
+$ cd python-ldap
+$ . bin/activate # activate the virtual environment
+$ sudo apt-get install libldap2-dev libsasl2-dev # headers needed for installing python-ldap
+$ pip install python-ldap
+</code></pre><h2 id="A-test-script"><a href="#A-test-script" class="headerlink" title="A test script"></a>A test script</h2><p>Create a simple test script to verify LDAP still works from Python (it should):</p>
+<pre><code>#!/usr/bin/env python
+
+import ldap
+
+def authenticate(address, username, password):
+    conn = ldap.initialize(&apos;ldap://&apos; + address)
+    conn.protocol_version = 3
+    conn.set_option(ldap.OPT_REFERRALS, 0)
+    return conn.simple_bind_s(username, password)
+</code></pre><p>Try it from the interpreter using <code>import test_ldap</code> and <code>test_ldap.authenticate()</code>:</p>
+<pre><code>$ python
+Python 2.7.9 (default, Mar  1 2015, 12:57:24) 
+[GCC 4.9.2] on linux2
+Type &quot;help&quot;, &quot;copyright&quot;, &quot;credits&quot; or &quot;license&quot; for more information.
+&gt;&gt;&gt; import test_ldap
+&gt;&gt;&gt; test_ldap.authenticate(&apos;192.168.122.64&apos;, &apos;administrator@mooctest.local&apos;, &apos;password&apos;)
+</code></pre><h2 id="Creating-a-new-user-account"><a href="#Creating-a-new-user-account" class="headerlink" title="Creating a new user account"></a>Creating a new user account</h2><p>Let’s try creating a new user account. On the server, go to <em>Active Directory Users and Computers</em>, then go to <em>Users</em>. Right-click, choose <em>New</em> &gt; <em>User</em></p>
+<p><img src="new-user.png" alt="Creating a new user"><br><img src="new-user-creation-window.png" alt="Filling the details to create a new user"></p>
+<p>Observe that this works fine:</p>
+<pre><code>&gt;&gt;&gt; test_ldap.authenticate(&apos;192.168.122.64&apos;, &apos;john-doe@mooctest.local&apos;, &apos;password&apos;)
+(97, [], 1, [])
+</code></pre><p>We’ll use the John Doe and the Jane Doe accounts (see the next section) for testing.</p>
+<h2 id="Creating-an-organizational-unit"><a href="#Creating-an-organizational-unit" class="headerlink" title="Creating an organizational unit"></a>Creating an organizational unit</h2><p>Create a new organizational unit. I’ll call mine <em>Students</em>.</p>
+<p><img src="create-ou.png" alt="Create a new OU named Students"></p>
+<p>Now create a new user within that account. I’ll call her <em>Jane Doe</em>. We’ll use her to test how to bind to users in OUs.</p>
+<p><img src="create-user-in-ou-1.png" alt="Right-click on the OU and choose New &gt; User"><br><img src="create-user-in-ou-2.png" alt="Fill in the details for the new user"></p>
+<h2 id="Exploring-the-API"><a href="#Exploring-the-API" class="headerlink" title="Exploring the API"></a>Exploring the API</h2><p>Let’s look at some commonly used methods and where to find documentation</p>
+<h3 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h3><p>These are some of the resources I found helpful in exploring <code>python-ldap</code>:</p>
+<ul>
+<li>The <a href="http://www.python-ldap.org/" target="_blank" rel="external">python-ldap site</a></li>
+<li>The <a href="http://www.python-ldap.org/doc/html/index.html" target="_blank" rel="external">online python-ldap docs</a></li>
+<li>The <a href="http://stackoverflow.com/questions/tagged/python-ldap?sort=votes&amp;pageSize=15" target="_blank" rel="external">python-ldap tag on StackOverflow</a></li>
+<li>The <a href="https://www.packtpub.com/books/content/python-ldap-applications-part-1-installing-and-configuring-python-ldap-library-and-bin" target="_blank" rel="external">Python LDAP Applications series on PacktPub</a> (<a href="https://www.packtpub.com/books/content/python-ldap-applications-part-2-ldap-opearations" target="_blank" rel="external">part 2</a>, <a href="https://www.packtpub.com/books/content/python-ldap-applications-part-3-more-ldap-operations-and-ldap-url-library" target="_blank" rel="external">part 3</a>, <a href="https://www.packtpub.com/books/content/python-ldap-applications-part-4-ldap-schema" target="_blank" rel="external">part 4</a>)</li>
+<li><a href="http://www.grotan.com/ldap/python-ldap-samples.html" target="_blank" rel="external">Python LDAP samples</a> by Grotan</li>
+</ul>
+<h3 id="Asynchronous-methods"><a href="#Asynchronous-methods" class="headerlink" title="Asynchronous methods"></a>Asynchronous methods</h3><p>Methods not ending in <code>_s</code> are asynchronous methods. Those that do end in <code>_s</code> are synchronous.</p>
+<h3 id="ldap-initialize"><a href="#ldap-initialize" class="headerlink" title="ldap.initialize()"></a>ldap.initialize()</h3><p>The first method you need to use is <code>ldap.initialize</code>. It takes one parameter, the LDAP URL to connect to:</p>
+<pre><code>&gt;&gt;&gt; ldap.initialize(&apos;ldap://192.168.100.50&apos;)
+&lt;ldap.ldapobject.SimpleLDAPObject instance at 0x7f6e626d9a70&gt;
+</code></pre><p>This returns a <code>SimpleLDAPObject</code> instance. We want to save this in a variable so we can do something with it.</p>
+<pre><code>&gt;&gt;&gt; con = ldap.initialize(&apos;ldap://192.168.122.64&apos;)
+&gt;&gt;&gt;
+</code></pre><p>Be aware that initializing does not connect to the server yet, you won’t get any errors if you specify a server that doesn’t exist (you will once you try to bind to it).</p>
+<h3 id="ldap-bind"><a href="#ldap-bind" class="headerlink" title="ldap.*bind()"></a>ldap.*bind()</h3><p>These methods are used to bind to a server. The methods are <code>bind</code>, <code>bind_s</code>, <code>sasl_interactive_bind_s</code>, <code>simple_bind</code> and <code>simple_bind_s</code>.</p>
+<p>You won’t ever need to use <code>bind</code> and <code>bind_s</code>, since only simply authentication is supported at the moment. You can use <code>bind</code>/<code>bind_s</code>, but you’d have to provide <code>ldap.AUTH_SIMPLE</code> as the third parameter all the time.</p>
+<p>For <code>sasl_interactive_bind_s</code>, which I won’t cover, you can look <a href="https://www.packtpub.com/books/content/python-ldap-applications-part-1-installing-and-configuring-python-ldap-library-and-bin" target="_blank" rel="external">here</a>.</p>
+<p>I’ll only cover <code>simple_bind_s</code> here. As mentioned before, <code>simple_bind</code> is the same, but asynchronous. This is what the <a href="http://www.python-ldap.org/doc/html/ldap.html#ldap.LDAPObject.simple_bind_s" target="_blank" rel="external">documentation</a> says about it:</p>
+<pre><code>LDAPObject.simple_bind_s([who=&apos;&apos;[, cred=&apos;&apos;]]) -&gt; None
+
+After an LDAP object is created, and before any other operations can be attempted over the connection, a bind operation must be performed.
+</code></pre><p><code>simple_bind_s</code> takes two parameters: <code>who</code>, the username, and <code>cred</code>, the password.</p>
+<pre><code>&gt;&gt;&gt; con.simple_bind_s(&apos;john-doe@mooctest.local&apos;, &apos;password&apos;)
+(97, [], 4, [])
+&gt;&gt;&gt; con.simple_bind_s(&apos;john-doe@mooctest.local&apos;, &apos;wrongpassword&apos;)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 208, in simple_bind_s
+    resp_type, resp_data, resp_msgid, resp_ctrls = self.result3(msgid,all=1,timeout=self.timeout)
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 469, in result3
+    resp_ctrl_classes=resp_ctrl_classes
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 476, in result4
+    ldap_result = self._ldap_call(self._l.result4,msgid,all,timeout,add_ctrls,add_intermediates,add_extop)
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 99, in _ldap_call
+    result = func(*args,**kwargs)
+ldap.INVALID_CREDENTIALS: {&apos;info&apos;: &apos;80090308: LdapErr: DSID-0C0903C5, comment: AcceptSecurityContext error, data 52e, v23f0&apos;, &apos;desc&apos;: &apos;Invalid credentials&apos;}
+</code></pre><p>We see that binding successfully returns a weird tuple, while providing a wrong password throws an exception. Looking into the source shows that it returns this:</p>
+<pre><code>return resp_type, resp_data, resp_msgid, resp_ctrls
+</code></pre><p>…That doesn’t help a whole lot. But here’s what I figured out:</p>
+<ul>
+<li><code>resp_type</code>: the result type</li>
+<li><code>resp_data</code>: data returned by the LDAP server</li>
+<li><code>resp_msgid</code>: an identifier, this increases every messages. In this case, it’s <code>4</code>, the next message will have a <code>resp_msgid</code> of <code>5</code>. This is important for asynchronous methods, as we’ll see later</li>
+<li><code>resp_ctrls</code>: no idea.</li>
+</ul>
+<p>Microsoft’s <a href="http://support.microsoft.com/en-gb/kb/218185" target="_blank" rel="external">LDAP Error Codes</a> says 0x61 (97) means <code>The referral limit was exceeded.</code> but <a href="https://tools.ietf.org/html/rfc2251#section-4.1.10" target="_blank" rel="external">RFC 2251</a> says it should be treated as an unknown error code, as it’s not in the range.</p>
+<p><a href="https://mail.python.org/pipermail/python-ldap/2012q2/003121.html" target="_blank" rel="external">This post</a> on the mailing list sheds some light on the result type:</p>
+<pre><code>The 97 is not the LDAP result code. It&apos;s the result type ldap.RES_BIND.
+Normally you don&apos;t have to look at the results returned by
+LDAPObject.simple_bind_s() (unless you want to extract the bind response
+controls).
+
+If the LDAP result code is not 0 the accompanying exception is raised like
+ldap.INVALID_CREDENTIALS in your example.
+</code></pre><p>So exceptions. For a wrong username or password, <code>ldap.INVALID_CREDENTIALS</code> will be raised. Another common one is <code>ldap.SERVER_DOWN</code>, which happened to me when I hadn’t used the connection in a while on the REPL. Re-initializing the connection did the trick. So trying to bind to the server should look like this (adapted from <a href="https://www.packtpub.com/books/content/python-ldap-applications-part-1-installing-and-configuring-python-ldap-library-and-bin" target="_blank" rel="external">here</a>):</p>
+<pre><code>try:
+    l.simple_bind_s(&apos;john-doe@mooctest.local&apos;, &apos;password&apos;)
+except ldap.INVALID_CREDENTIALS:
+    print(&quot;Your username or password is incorrect.&quot;)
+except ldap.SERVER_DOWN:
+    print(&quot;The server appears to be down.&quot;)
+except ldap.LDAPError, e:
+    if type(e.message) == dict and e.message.has_key(&apos;desc&apos;):
+        print e.message[&apos;desc&apos;]
+    else: 
+        print e
+</code></pre><p>If we don’t receive any messages, we know that we bound (thus authenticated) successfully!</p>
+<h3 id="ldap-unbind"><a href="#ldap-unbind" class="headerlink" title="ldap.unbind*()"></a>ldap.unbind*()</h3><p>Unbinding will disconnect from the LDAP server and free up resources. It will also mark the <code>LDAPObject</code> invalid, and all new operations and it will fail. Yes, that includes new bindings:</p>
+<pre><code>&gt;&gt;&gt; con.unbind_s()
+&gt;&gt;&gt; con.simple_bind_s(&apos;john-doe@mooctest.local&apos;, &apos;123&apos;)
+Traceback (most recent call last):
+  File &quot;&lt;stdin&gt;&quot;, line 1, in &lt;module&gt;
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 207, in simple_bind_s
+    msgid = self.simple_bind(who,cred,serverctrls,clientctrls)
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 201, in simple_bind
+    return self._ldap_call(self._l.simple_bind,who,cred,RequestControlTuples(serverctrls),RequestControlTuples(clientctrls))
+  File &quot;/usr/lib/python2.7/dist-packages/ldap/ldapobject.py&quot;, line 99, in _ldap_call
+    result = func(*args,**kwargs)
+ldap.LDAPError: LDAP connection invalid
+</code></pre><p>You have to initialize the server again to bind again.</p>
+<h3 id="Final-script"><a href="#Final-script" class="headerlink" title="Final script"></a>Final script</h3><pre><code>#!/usr/bin/env python
+
+import ldap
+
+def authenticate(address, username, password):
+    conn = ldap.initialize(&apos;ldap://&apos; + address)
+    conn.protocol_version = 3
+    conn.set_option(ldap.OPT_REFERRALS, 0)
+
+    try:
+        result = conn.simple_bind_s(username, password)
+    except ldap.INVALID_CREDENTIALS:
+        return &quot;Invalid credentials&quot;
+    except ldap.SERVER_DOWN:
+        return &quot;Server down&quot;
+    except ldap.LDAPError, e:
+        if type(e.message) == dict and e.message.has_key(&apos;desc&apos;):
+            return &quot;Other LDAP error: &quot; + e.message[&apos;desc&apos;]
+        else: 
+            return &quot;Other LDAP error: &quot; + e
+    finally:
+        conn.unbind_s()
+
+    return &quot;Succesfully authenticated&quot;
+</code></pre><h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><p><img src="example.png" alt="The final product"></p>
+<p>This post was an exploration into Python, Active Directory, and if they work together. Turns out they do, without a lot of configuration! I hope to use this in a future Django project. I was only really interested in authentication, but if you want to try more things (such as searching, modifying passwords, …) you can refer to the <em>Resources</em> section above. For example, searching in the <em>Students</em> OU we created earlier:</p>
+<pre><code>&gt;&gt;&gt; import ldap
+&gt;&gt;&gt; import ldif
+&gt;&gt;&gt; ldif_writer = ldif.LDIFWriter(sys.stdout)
+&gt;&gt;&gt; basedn = = &quot;OU=students,DC=mooctest,DC=local&quot;
+&gt;&gt;&gt; results = con.search_s(basedn,ldap.SCOPE_SUBTREE,&quot;(cn=*)&quot;)
+&gt;&gt;&gt; for dn,entry in results:
+...     ldif_writer.unparse(dn,entry)
+... 
+dn: CN=Jane Doe,OU=Students,DC=mooctest,DC=local
+accountExpires: 9223372036854775807
+badPasswordTime: 130723115748598376
+badPwdCount: 1
+cn: Jane Doe
+codePage: 0
+countryCode: 0
+dSCorePropagationData: 16010101000000.0Z
+displayName: Jane Doe
+distinguishedName: CN=Jane Doe,OU=Students,DC=mooctest,DC=local
+givenName: Jane
+instanceType: 4
+lastLogoff: 0
+lastLogon: 0
+lastLogonTimestamp: 130723115727192242
+logonCount: 0
+name: Jane Doe
+objectCategory: CN=Person,CN=Schema,CN=Configuration,DC=mooctest,DC=local
+objectClass: top
+objectClass: person
+objectClass: organizationalPerson
+objectClass: user
+objectGUID:: E8uawUM+DkyLzjIQE5CSHQ==
+objectSid:: AQUAAAAAAAUVAAAAyQ9OG3xBa/Vl4s3bVQQAAA==
+primaryGroupID: 513
+pwdLastSet: 130723115588128828
+sAMAccountName: jane-doe
+sAMAccountType: 805306368
+sn: Doe
+uSNChanged: 20571
+uSNCreated: 20565
+userAccountControl: 512
+</code></pre>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/ldap-with-python-and-ad/" data-id="ciqu2unwl00085ulk2csciyye" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/ldap-with-python-and-ad/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Dutch spell checking for IntelliJ IDEA
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/my-fresh-server-setup-steps/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">My fresh server setup steps</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2015/ldap-with-python-and-ad/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

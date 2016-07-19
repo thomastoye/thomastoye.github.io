@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>My fresh server setup steps | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="These are the steps I take after I image a new server. These are mainly personal notes, but I imagine someone else might be interested in my process.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My fresh server setup steps">
+<meta property="og:url" content="http://thomastoye.be/2015/my-fresh-server-setup-steps/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="These are the steps I take after I image a new server. These are mainly personal notes, but I imagine someone else might be interested in my process.">
+<meta property="og:image" content="http://thomastoye.be/2015/my-fresh-server-setup-steps/final-product.png">
+<meta property="og:image" content="http://thomastoye.be/adduser.png">
+<meta property="og:image" content="http://thomastoye.be/add-dns-record.png">
+<meta property="og:image" content="http://thomastoye.be/set-reverse-dns.png">
+<meta property="og:updated_time" content="2016-04-26T08:14:35.755Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="My fresh server setup steps">
+<meta name="twitter:description" content="These are the steps I take after I image a new server. These are mainly personal notes, but I imagine someone else might be interested in my process.">
+<meta name="twitter:image" content="http://thomastoye.be/2015/my-fresh-server-setup-steps/final-product.png">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-my-fresh-server-setup-steps" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/my-fresh-server-setup-steps/" class="article-date">
+  <time datetime="2015-03-31T11:43:14.000Z" itemprop="datePublished">2015-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      My fresh server setup steps
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>These are the steps I take after I image a new server. These are mainly personal notes, but I imagine someone else might be interested in my process.</p>
+<p><img src="/2015/my-fresh-server-setup-steps/final-product.png" alt="The final product"></p>
+<a id="more"></a>
+<h1 id="Imaging-the-server"><a href="#Imaging-the-server" class="headerlink" title="Imaging the server"></a>Imaging the server</h1><p>I won’t waste any time on this, image a new server from your VPS provider’s control panel, or install it yourself. I usually go with Debian or Ubuntu for the operating system, since those are solid server distributions that I know well.</p>
+<h1 id="Creating-a-new-user-account"><a href="#Creating-a-new-user-account" class="headerlink" title="Creating a new user account"></a>Creating a new user account</h1><pre><code># adduser thomas
+</code></pre><p><img src="adduser.png" alt="Add a new user"></p>
+<h2 id="Granting-sudo-privileges"><a href="#Granting-sudo-privileges" class="headerlink" title="Granting sudo privileges"></a>Granting sudo privileges</h2><p>Using <code>visudo</code>, update the <code>sudo</code> configuration to allow any member of the <code>sudo</code> group:</p>
+<pre><code># visudo
+</code></pre><p>Make sure you have a line that looks like this:</p>
+<pre><code># Allow members of group sudo to execute any command
+%sudo    ALL=(ALL:ALL) ALL
+</code></pre><p>Now add your user to the <code>sudo</code> group:</p>
+<pre><code># usermod -a -G sudo thomas
+</code></pre><h1 id="Installing-public-key-and-disabling-password-SSH"><a href="#Installing-public-key-and-disabling-password-SSH" class="headerlink" title="Installing public key and disabling password SSH"></a>Installing public key and disabling password SSH</h1><h2 id="Installing-your-SSH-identity"><a href="#Installing-your-SSH-identity" class="headerlink" title="Installing your SSH identity"></a>Installing your SSH identity</h2><p>After I test out SSH, the first thing I do is copy my certificate to the server:</p>
+<pre><code>$ ssh thomas@104.167.114.170
+The authenticity of host &apos;104.167.114.170 (104.167.114.170)&apos; can&apos;t be established.
+ECDSA key fingerprint is 12:52:c7:9b:4c:93:b8:8b:db:3f:f1:1f:19:70:fd:ab.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &apos;104.167.114.170&apos; (ECDSA) to the list of known hosts.
+thomas@104.167.114.170&apos;s password: 
+Welcome to Ubuntu 14.04.1 LTS (GNU/Linux 3.13.0-32-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Tue Mar 31 09:07:34 EDT 2015
+
+  System load:  0.12              Processes:           101
+  Usage of /:   3.1% of 37.27GB   Users logged in:     0
+  Memory usage: 3%                IP address for eth0: 104.167.114.170
+  Swap usage:   0%
+
+  Graph this data and manage this system at:
+    https://landscape.canonical.com/
+
+0 packages can be updated.
+0 updates are security updates.
+
+
+The programs included with the Ubuntu system are free software;
+the exact distribution terms for each program are described in the
+individual files in /usr/share/doc/*/copyright.
+
+Ubuntu comes with ABSOLUTELY NO WARRANTY, to the extent permitted by
+applicable law.
+
+thomas@ubuntu:~$ logout
+Connection to 104.167.114.170 closed.
+</code></pre><p>Now copy your SSH identity:</p>
+<pre><code>$ ssh-copy-id thomas@104.167.114.170 
+/usr/bin/ssh-copy-id: INFO: attempting to log in with the new key(s), to filter out any that are already installed
+/usr/bin/ssh-copy-id: INFO: 2 key(s) remain to be installed -- if you are prompted now it is to install the new keys
+thomas@104.167.114.170&apos;s password: 
+
+Number of key(s) added: 2
+
+Now try logging into the machine, with:   &quot;ssh &apos;thomas@104.167.114.170&apos;&quot;
+and check to make sure that only the key(s) you wanted were added.
+</code></pre><p>You can now log in using SSH without a password.</p>
+<h2 id="Disabling-password-logins-with-SSH"><a href="#Disabling-password-logins-with-SSH" class="headerlink" title="Disabling password logins with SSH"></a>Disabling password logins with SSH</h2><p>Edit <code>/etc/ssh/sshd_config</code> and uncomment <code>PasswordAuthentication yes</code>, then change it to <code>PasswordAuthentication no</code>. Also check that <code>ChallengeResponseAuthentication</code> is set to <code>no</code></p>
+<p>Now restart the service:</p>
+<pre><code>sudo service ssh restart
+</code></pre><h1 id="Disabling-root-SSH-logins"><a href="#Disabling-root-SSH-logins" class="headerlink" title="Disabling root SSH logins"></a>Disabling root SSH logins</h1><p>Ubuntu Server already disallows root logins over SSH by default, if you use Debian or another distribution, you might need to uncomment <code>PermitRootLogin yes</code> and change it to <code>PermitRootLogin no</code>.</p>
+<h1 id="Updating-and-upgrading"><a href="#Updating-and-upgrading" class="headerlink" title="Updating and upgrading"></a>Updating and upgrading</h1><p>It’s now time for a little maintenance. Nobody likes out-of-date packages.</p>
+<pre><code>$ sudo apt-get update &amp;&amp; sudo apt-get upgrade
+</code></pre><h1 id="Updating-or-adding-a-DNS-record-and-setting-the-hostname"><a href="#Updating-or-adding-a-DNS-record-and-setting-the-hostname" class="headerlink" title="Updating or adding a DNS record and setting the hostname"></a>Updating or adding a DNS record and setting the hostname</h1><p>If this is a public-facing server, I will add or update a DNS record. Today, I’m reimaging my CI server. I add a new <code>A</code> record to my domain, <code>thomastoye.be</code>:</p>
+<p><img src="add-dns-record.png" alt="Adding a new A DNS record"></p>
+<p>This way, this server will be reachable on <code>ci.thomastoye.be</code>.</p>
+<h2 id="Set-the-hostname"><a href="#Set-the-hostname" class="headerlink" title="Set the hostname"></a>Set the hostname</h2><p>On the server, set the hostname:</p>
+<pre><code>$ echo &quot;ci.thomastoye.be&quot; | sudo tee /etc/hostname
+</code></pre><h2 id="Set-reverse-DNS"><a href="#Set-reverse-DNS" class="headerlink" title="Set reverse DNS"></a>Set reverse DNS</h2><p>You will probably have to set this on your VPS provider’s control panel:</p>
+<p><img src="set-reverse-dns.png" alt="Setting the reverse DNS to ci.thomastoye.be"></p>
+<h1 id="Install-utilities-and-dotfiles"><a href="#Install-utilities-and-dotfiles" class="headerlink" title="Install utilities and dotfiles"></a>Install utilities and dotfiles</h1><h2 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h2><p>Install zsh and make it the default shell for your user:</p>
+<pre><code>$ sudo apt-get install zsh
+$ chsh
+Password: 
+Changing the login shell for thomas
+Enter the new value, or press ENTER for the default
+    Login Shell [/bin/bash]: /bin/zsh
+</code></pre><h2 id="vim-with-Vundle-and-YouCompleteMe"><a href="#vim-with-Vundle-and-YouCompleteMe" class="headerlink" title="vim with Vundle and YouCompleteMe"></a>vim with Vundle and YouCompleteMe</h2><pre><code>$ sudo apt-get install vim build-essential cmake python-dev
+$ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim # install Vundle
+</code></pre><p>The libraries will be used later to compile YouCompleteMe.</p>
+<p>If you already set up your <code>.vimrc</code>:</p>
+<pre><code>$ vim +PluginInstall +qall # install Vundle plugins
+$ cd .vim/bundle/YouCompleteMe
+$ ./install.sh --clang-completer
+</code></pre><h2 id="Other-utilities"><a href="#Other-utilities" class="headerlink" title="Other utilities"></a>Other utilities</h2><p>These are pretty handy to have too:</p>
+<ul>
+<li><code>git</code>: pretty obvious</li>
+<li><code>htop</code>: to investigate if your server locks up/becomes slow/…</li>
+<li><code>nethogs</code>: to investigate network usage</li>
+<li><code>tmux</code>: terminal multiplexer</li>
+</ul>
+<pre><code>$ sudo apt-get install git htop nethogs tmux
+</code></pre><h2 id="Dotfiles"><a href="#Dotfiles" class="headerlink" title="Dotfiles"></a>Dotfiles</h2><p>I made a simple script to set up my dotfiles, you might have to install yours manually:</p>
+<pre><code>$ wget https://raw.githubusercontent.com/doublet/dotfiles/master/deploy_debian.sh -O - | sh
+</code></pre><h1 id="Conclusion"><a href="#Conclusion" class="headerlink" title="Conclusion"></a>Conclusion</h1><pre><code>thomas@zdebian$ ssh thomas@ci.thomastoye.be
+The authenticity of host &apos;ci.thomastoye.be (104.167.114.170)&apos; can&apos;t be established.
+ECDSA key fingerprint is 12:52:c7:9b:4c:93:b8:8b:db:3f:f1:1f:19:70:fd:ab.
+Are you sure you want to continue connecting (yes/no)? yes
+Warning: Permanently added &apos;ci.thomastoye.be,104.167.114.170&apos; (ECDSA) to the list of known hosts.
+Welcome to Ubuntu 14.04.2 LTS (GNU/Linux 3.13.0-32-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com/
+
+  System information as of Tue Mar 31 11:06:30 EDT 2015
+
+  System load:  0.2               Processes:           99
+  Usage of /:   4.4% of 37.27GB   Users logged in:     0
+  Memory usage: 3%                IP address for eth0: 104.167.114.170
+  Swap usage:   0%
+
+  Graph this data and manage this system at:
+    https://landscape.canonical.com/
+
+Last login: Tue Mar 31 11:06:30 2015 from ***
+thomas@ci$
+</code></pre><p>That’s it. From fresh Linux box to safer, up-to-date and customized Linux box.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/my-fresh-server-setup-steps/" data-id="ciqu2unw000045ulk9umwpom0" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/my-fresh-server-setup-steps/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/ldap-with-python-and-ad/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Python LDAP authentication with Microsoft Active Directory
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/play-framework-cd/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Continuous deployment for Play! Framework 2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2015/my-fresh-server-setup-steps/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

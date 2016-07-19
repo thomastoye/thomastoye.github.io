@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I recently had a situation where I wanted to quickly export data from a database source to PDFs. I wanted to create a document for each volunteer where they could check their information and other det">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Creating documents from a template using LibreOffice's 'mail merge' feature">
+<meta property="og:url" content="http://thomastoye.be/2016/libreoffice-mail-merge/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="I recently had a situation where I wanted to quickly export data from a database source to PDFs. I wanted to create a document for each volunteer where they could check their information and other det">
+<meta property="og:image" content="http://thomastoye.be/2016/libreoffice-mail-merge/writer-export-result.png">
+<meta property="og:image" content="http://thomastoye.be/connect-db-existing-postgres.png">
+<meta property="og:image" content="http://thomastoye.be/connect-db-connection-settings.png">
+<meta property="og:image" content="http://thomastoye.be/connect-db-auth.png">
+<meta property="og:image" content="http://thomastoye.be/connect-db-save.png">
+<meta property="og:image" content="http://thomastoye.be/connect-db-save-dialog.png">
+<meta property="og:image" content="http://thomastoye.be/writer-data-sources.png">
+<meta property="og:image" content="http://thomastoye.be/writer-template-finished.png">
+<meta property="og:image" content="http://thomastoye.be/writer-print-question.png">
+<meta property="og:image" content="http://thomastoye.be/writer-export-dialog.png">
+<meta property="og:image" content="http://thomastoye.be/writer-export-busy.png">
+<meta property="og:image" content="http://thomastoye.be/writer-export-result.png">
+<meta property="og:updated_time" content="2016-07-19T23:30:08.681Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Creating documents from a template using LibreOffice's 'mail merge' feature">
+<meta name="twitter:description" content="I recently had a situation where I wanted to quickly export data from a database source to PDFs. I wanted to create a document for each volunteer where they could check their information and other det">
+<meta name="twitter:image" content="http://thomastoye.be/2016/libreoffice-mail-merge/writer-export-result.png">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-libreoffice-mail-merge" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/libreoffice-mail-merge/" class="article-date">
+  <time datetime="2016-07-19T20:24:09.000Z" itemprop="datePublished">2016-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I recently had a situation where I wanted to quickly export data from a database source to PDFs. I wanted to create a document for each volunteer where they could check their information and other details. I could have solved this with a Node.js script or using a JVM library, but I decided to try something new for me: the capabilities of a standard office suite. Preferring FOSS, LibreOffice was the logical choice. I was surprised by how easy and fluently everything went and I will definitely consider this for similar future projects.</p>
+<p>A big advantage of using this over packages like <a href="https://www.npmjs.com/package/pdfkit" target="_blank" rel="external">pdfkit</a>, <a href="https://www.npmjs.com/package/html-pdf" target="_blank" rel="external">html-pdf</a> and <a href="https://www.npmjs.com/package/lx-pdf" target="_blank" rel="external">lx-pdf</a> is that you get the full capabilities of a word processor. Helps a lot if you have a standard template you need to adhere to: perfectly recreating such a template in HTML or instructions may take a lot of time.</p>
+<p><img src="/2016/libreoffice-mail-merge/writer-export-result.png" alt="The end result: individual PDFs with dynamically generated data from a PostgreSQL source"></p>
+<a id="more"></a>
+<h1 id="Dependencies"><a href="#Dependencies" class="headerlink" title="Dependencies"></a>Dependencies</h1><p>TODO LibreOffice suite</p>
+<h2 id="JDBC-driver"><a href="#JDBC-driver" class="headerlink" title="JDBC driver"></a>JDBC driver</h2><p>We need a driver to connect to Postgres from LibreOffice.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install libreoffice-sdbc-postgresql</span><br></pre></td></tr></table></figure>
+<p>You can also manually install the LibreOffice extension. Check <a href="http://www.postgresonline.com/journal/archives/8-Using-OpenOffice-Base-2.3.1-with-PostgreSQL.html" target="_blank" rel="external">here</a> for more information. You may need to close all LibreOffice applications to fully apply the extension.</p>
+<h1 id="Setting-up-the-database-connection"><a href="#Setting-up-the-database-connection" class="headerlink" title="Setting up the database connection"></a>Setting up the database connection</h1><p>Open up LibreOffice Base. We are going to connect to our existing Postgres database. To do this, choose <code>Connect to an existing database</code>, and choose <code>PostgreSQL</code>. If <code>PostgreSQL</code> is not in the list, you did not install the LibreOffice extension successfully. You may need to close all LibreOffice applications to fully apply the extension.</p>
+<p><img src="connect-db-existing-postgres.png" alt="Choose `Connect to an existing database`, and choose `PostgreSQL`"></p>
+<p>In the next screen, enter the connection string. It should look like <code>postgresql://host:port/database_name</code>. You do not provide a username or password in the connection string, you can also do this in the next step.</p>
+<p><img src="connect-db-connection-settings.png" alt="Provide the connection string"></p>
+<p>Now you can provide authentication details for the database. You can also test the connection here.</p>
+<p><img src="connect-db-auth.png" alt="Provide a username to log in to the database"></p>
+<p>During the final step, you can save the database you created. Make sure to check <code>Yes, register the database for me</code>, this will register the database so you can access it from other LibreOffice applications. I also checked <code>Open the database for editing</code>, just to check if everything worked.</p>
+<p><img src="connect-db-save.png" alt="Save the database"></p>
+<p><img src="connect-db-save-dialog.png" alt="Choose a place to save the ODF file"></p>
+<h1 id="Creating-a-template"><a href="#Creating-a-template" class="headerlink" title="Creating a template"></a>Creating a template</h1><p>Now open up LibreOffice Writer. Go to <code>View &gt; Data Sources</code>, or press <code>F4</code> to open the Data Sources pane. Select your database and open the <code>Tables</code> view. You will find your tables all the way down, with a <code>public.</code> prefix (unless you used a different schema).</p>
+<p><img src="writer-data-sources.png" alt="The data sources pane, which was opened by pressing View &gt; Data Sources"></p>
+<p>You can now create a template file. If you want to use a variable field, you can drag a column from the <code>Data Sources</code> view. For example, to get the first name, I dragged the <code>first_name</code> column into the document. Click on the column name (in the example <code>first_name</code>) and drag the caret into the text.</p>
+<p><img src="writer-template-finished.png" alt="A finished template"></p>
+<h1 id="Creating-the-resulting-documents"><a href="#Creating-the-resulting-documents" class="headerlink" title="Creating the resulting documents"></a>Creating the resulting documents</h1><p>I have 36 rows in the table I want to use. I can now choose to export these to a single document (the result would be one document with 36 pages) or to individual documents (the result would be 36 individual documents). Since I will send the resulting documents to individual people, I will create individual documents.</p>
+<p>You can export the document by opening the print dialog (<code>File &gt; Print...</code> or <code>Ctrl+P</code>). When you do that, LibreOffice Writer will ask you <code>Your document contains address database fields. Do you want to print a form letter?</code>. Choose <code>Yes</code>.</p>
+<p><img src="writer-print-question.png" alt="LibreOffice asks if we want to print a form letter. Choose `Yes`."></p>
+<p>In the next dialog, you can select the records that should be used and control output settings. We will be outputting to a file and not printing, so select <code>File</code> for <code>Output</code>. I’m going for individual documents, the name of which is a custom column in a query I wrote. You could just as well use a database column.</p>
+<p><img src="writer-export-dialog.png" alt="The mail merge dialog"></p>
+<p><img src="writer-export-busy.png" alt="The dialog we see when LibreOffice Writer is exporting our documents"></p>
+<p>After exporting, you end up with individual documents. After experimenting, I choose to export to PDF. The files can now be sent to individual people to have them check their details.</p>
+<p><img src="writer-export-result.png" alt="The end result"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2016/libreoffice-mail-merge/" data-id="ciqu3eshh000c5ulkxbnrna49" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2016/libreoffice-mail-merge/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2016/how-i-manage-my-music/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">How I manage my music on Linux</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2016/libreoffice-mail-merge/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

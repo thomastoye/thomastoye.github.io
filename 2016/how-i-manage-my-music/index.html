@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>How I manage my music on Linux | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I wanted to take the time to talk about how I manage my music on Linux. I use the following tools:
+
+morituri, to rip CDs,
+beets, to manage my music library,
+mopidy, as a music server,
+ncmpcpp, as a mu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How I manage my music on Linux">
+<meta property="og:url" content="http://thomastoye.be/2016/how-i-manage-my-music/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="I wanted to take the time to talk about how I manage my music on Linux. I use the following tools:
+
+morituri, to rip CDs,
+beets, to manage my music library,
+mopidy, as a music server,
+ncmpcpp, as a mu">
+<meta property="og:image" content="http://thomastoye.be/2016/how-i-manage-my-music/ncmpcpp.png">
+<meta property="og:image" content="http://thomastoye.be/musicbrainz-cd-search-by-artist.png">
+<meta property="og:image" content="http://thomastoye.be/musicbrainz-cd-search-by-artist-entered.png">
+<meta property="og:image" content="http://thomastoye.be/musicbrainz-cd-search-select-artist.png">
+<meta property="og:image" content="http://thomastoye.be/musicbrainz-cd-search-add-new-release.png">
+<meta property="og:image" content="http://thomastoye.be/musicbrainz-cd-search-creating-new-release.png">
+<meta property="og:image" content="http://thomastoye.be/rip-started.png">
+<meta property="og:image" content="http://thomastoye.be/rip-complete.png">
+<meta property="og:image" content="http://thomastoye.be/ncmpcpp.png">
+<meta property="og:image" content="http://thomastoye.be/mpdroid.png">
+<meta property="og:image" content="http://thomastoye.be/sshelper.png">
+<meta property="og:updated_time" content="2016-04-26T08:14:35.747Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="How I manage my music on Linux">
+<meta name="twitter:description" content="I wanted to take the time to talk about how I manage my music on Linux. I use the following tools:
+
+morituri, to rip CDs,
+beets, to manage my music library,
+mopidy, as a music server,
+ncmpcpp, as a mu">
+<meta name="twitter:image" content="http://thomastoye.be/2016/how-i-manage-my-music/ncmpcpp.png">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-how-i-manage-my-music" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/how-i-manage-my-music/" class="article-date">
+  <time datetime="2016-01-04T18:14:57.000Z" itemprop="datePublished">2016-01-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      How I manage my music on Linux
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I wanted to take the time to talk about how I manage my music on Linux. I use the following tools:</p>
+<ul>
+<li><a href="http://thomas.apestaart.org/morituri/trac/" target="_blank" rel="external"><code>morituri</code></a>, to rip CDs,</li>
+<li><a href="http://beets.radbox.org/" target="_blank" rel="external"><code>beets</code></a>, to manage my music library,</li>
+<li><a href="http://beets.radbox.org/" target="_blank" rel="external"><code>mopidy</code></a>, as a music server,</li>
+<li><a href="http://rybczak.net/ncmpcpp/" target="_blank" rel="external"><code>ncmpcpp</code></a>, as a music server client,</li>
+<li><a href="http://arachnoid.com/android/SSHelper/" target="_blank" rel="external"><code>SSHelper</code></a> and <a href="https://rsync.samba.org/" target="_blank" rel="external"><code>rsync</code></a>, to sync music to my phone.</li>
+</ul>
+<p><img src="/2016/how-i-manage-my-music/ncmpcpp.png" alt="ncmpcpp with mopidy as a server, listing artists, albums and tracks"></p>
+<a id="more"></a>
+<h1 id="Ripping-a-CD-morituri"><a href="#Ripping-a-CD-morituri" class="headerlink" title="Ripping a CD: morituri"></a>Ripping a CD: morituri</h1><p>I use <a href="http://thomas.apestaart.org/morituri/trac/" target="_blank" rel="external">morituri</a> to rip CDs.</p>
+<p>I just got a CD with a book I bought, <em>Her name is Calla</em>‘s album <em>Navigator</em>. I will use it as an example in this blog post.</p>
+<h2 id="Finding-the-drive’s-offset"><a href="#Finding-the-drive’s-offset" class="headerlink" title="Finding the drive’s offset"></a>Finding the drive’s offset</h2><p>You only have to do this once (for each CD drive). Insert a CD in your drive, then run <code>rip offset find</code>. Use a wellknown album: <em>Her name is Calla</em>‘s album was “not found in AccurateRip database”, so I tried again with <em>Franz Ferdinand</em>‘s album of the same name.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ rip offset find</span><br><span class="line">Checking device /dev/cdrom</span><br><span class="line">Album not found <span class="keyword">in</span> AccurateRip database. </span><br><span class="line">$ <span class="comment"># Changing the CD to something that might have a better chance of being included in the database</span></span><br><span class="line">$ rip offset find</span><br><span class="line">Checking device /dev/cdrom</span><br><span class="line">Trying <span class="built_in">read</span> offset 6 ...                      </span><br><span class="line">Trying <span class="built_in">read</span> offset 48 ...                     </span><br><span class="line">Trying <span class="built_in">read</span> offset 102 ...                    </span><br><span class="line">Offset of device is likely 102, confirming ...</span><br><span class="line">                                              </span><br><span class="line">Read offset of device is: 102.</span><br></pre></td></tr></table></figure>
+<h2 id="Ripping-a-CD-to-FLAC"><a href="#Ripping-a-CD-to-FLAC" class="headerlink" title="Ripping a CD to FLAC"></a>Ripping a CD to FLAC</h2><p>We wil rip the CD to <a href="https://en.wikipedia.org/wiki/FLAC" target="_blank" rel="external">FLAC</a>, a loss-less open-source codec. <em>102</em> is the offset we found above.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">$ mkdir Her_Name_Is_Calla_-_Navigator</span><br><span class="line">$ <span class="built_in">cd</span> Her_Name_Is_Calla_-_Navigator</span><br><span class="line">$ rip <span class="built_in">cd</span> rip --offset 102</span><br><span class="line">Checking device /dev/sr0</span><br><span class="line">CDDB disc id: a60e080c                        </span><br><span class="line">MusicBrainz disc id mxCOjvkQ7UxZIWQf6._MXdeNdk0-</span><br><span class="line">MusicBrainz lookup URL http://mm.musicbrainz.org/bare/cdlookup.html?toc=1+12+269576+150+14387+33156+41485+63566+85189+123198+148717+154783+186693+199010+251815&amp;tracks=12&amp;id=mxCOjvkQ7UxZIWQf6._MXdeNdk0-</span><br><span class="line">Disc duration: 00:59:52.346, 12 audio tracks</span><br><span class="line">Error: NotFoundException(ResponseError(),)</span><br><span class="line">Continuing without metadata</span><br><span class="line">Submit this disc to MusicBrainz at the above URL.</span><br></pre></td></tr></table></figure>
+<p>Eh, what’s going on here? Well, <code>morituri</code> tries to find the CD on <a href="http://http://musicbrainz.org" target="_blank" rel="external">MusicBrainz</a> to automatically tag it. MusicBrainz is like Wikipedia, but for bands, albums, and other music releases.. In this case, the CD was not recognized, and it’s suggested we add it to MusicBrainz ourselves.</p>
+<p>After logging in, we can continue the process of creating the CD on MusicBrainz.</p>
+<p><img src="musicbrainz-cd-search-by-artist.png" alt="The screen we see after logging in to MusicBrainz"></p>
+<p><img src="musicbrainz-cd-search-by-artist-entered.png" alt="Searching for an artist"></p>
+<p><img src="musicbrainz-cd-search-select-artist.png" alt="Selecting the correct artist"></p>
+<p><img src="musicbrainz-cd-search-add-new-release.png" alt="None of the release match the album we&#39;re looking for, we&#39;ll add a new one"></p>
+<p><img src="musicbrainz-cd-search-creating-new-release.png" alt="Adding a new release is a matter of filling out some forms"></p>
+<p>Now that we created the release, our ripping should go fine. I had to click the link one more time to link the TOC of the CD to the release, but everything went smoothly after that.</p>
+<p><img src="rip-started.png" alt="Just started ripping"></p>
+<p><img src="rip-complete.png" alt="The rip is compelete, and we are now left with a bunch of flac files"></p>
+<p>Now that the rip is complete, we can import these files into <code>beets</code>.</p>
+<h1 id="Importing-and-tagging-files-beets-for-organisation"><a href="#Importing-and-tagging-files-beets-for-organisation" class="headerlink" title="Importing and tagging files: beets for organisation"></a>Importing and tagging files: beets for organisation</h1><p>I use <a href="http://beets.radbox.org/" target="_blank" rel="external">beets</a> to manage my music library.</p>
+<h2 id="Importing-files-into-beets"><a href="#Importing-files-into-beets" class="headerlink" title="Importing files into beets"></a>Importing files into beets</h2><p>After setting up a library, you can start to import music. You use <code>beet import</code> for this. As an example, let’s import the album we ripped earlier.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">$ beet import Her\ Name\ Is\ Calla\ -\ Navigator </span><br><span class="line"></span><br><span class="line">/home/thomas/tmp/Her_Name_Is_Calla_-_Navigator/album/Her Name Is Calla - Navigator (12 items)</span><br><span class="line">Tagging:</span><br><span class="line">    Her Name Is Calla - Navigator</span><br><span class="line">URL:</span><br><span class="line">    http://musicbrainz.org/release/8d1604ad-8351-4467-bbbc-3da68973a404</span><br><span class="line">(Similarity: 100.0%) (CD, 2014)</span><br></pre></td></tr></table></figure>
+<p>As you can see, <code>beets</code> will also contact MusicBrainz, where it finds the album. I like to have all of my music backed by MusicBrainz, that way, I know the metadata is always correct.</p>
+<p>The power of <code>beets</code> is correcting music. For example, if the artist name on the FLAC files was “her name is calla”, <code>beets</code> would offer to correct this to <code>Her Name Is Calla</code>.</p>
+<p>We can check that <code>beets</code> imported the album:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">$ beet ls her name is calla</span><br><span class="line">Her Name Is Calla - Navigator - I Was on the Back of a Nightingale</span><br><span class="line">Her Name Is Calla - Navigator - The Roots Run Deep</span><br><span class="line">Her Name Is Calla - Navigator - It<span class="string">'s Called, '</span>Daisy<span class="string">'</span><br><span class="line">Her Name Is Calla - Navigator - Ragman Roll</span><br><span class="line">Her Name Is Calla - Navigator - Meridian Arc</span><br><span class="line">Her Name Is Calla - Navigator - Navigator</span><br><span class="line">Her Name Is Calla - Navigator - Burial</span><br><span class="line">Her Name Is Calla - Navigator - A Second Life</span><br><span class="line">Her Name Is Calla - Navigator - It Was Flood</span><br><span class="line">Her Name Is Calla - Navigator - Whale Fall: A Journal</span><br><span class="line">Her Name Is Calla - Navigator - Dreamlands</span><br><span class="line">Her Name Is Calla - Navigator - Perfect Prime</span></span><br></pre></td></tr></table></figure>
+<p>Looks great! Now we actually want to listen to this. But first, I’ll talk a little about my <code>beets</code> setup.</p>
+<h2 id="beets-setup"><a href="#beets-setup" class="headerlink" title="beets setup"></a>beets setup</h2><p>This is my <code>~/.config/beets/config.yaml</code>:</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">directory:</span> ~/music</span><br><span class="line"><span class="attr">library:</span> ~/.beets_library.blb</span><br><span class="line"><span class="attr">import:</span></span><br><span class="line"><span class="attr">  copy:</span> <span class="literal">yes</span></span><br><span class="line"></span><br><span class="line"><span class="attr">paths:</span></span><br><span class="line"><span class="attr">  default:</span> $albumartist - $album ($year)%aunique&#123;&#125;/$track $title</span><br><span class="line"></span><br><span class="line"><span class="attr">plugins:</span> discogs fetchart missing lastimport lastgenre lyrics web thumbnails scrub convert</span><br><span class="line"></span><br><span class="line"><span class="attr">lastfm:</span></span><br><span class="line"><span class="attr">  user:</span> siyck</span><br><span class="line"></span><br><span class="line"><span class="attr">lastgenre:</span></span><br><span class="line"><span class="attr">  count:</span> <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="attr">convert:</span></span><br><span class="line"><span class="attr">  copy_album_art:</span> <span class="literal">yes</span></span><br><span class="line"><span class="attr">  dest:</span> /home/thomas/converted_music</span><br></pre></td></tr></table></figure>
+<h3 id="Music-directory-and-library"><a href="#Music-directory-and-library" class="headerlink" title="Music directory and library"></a>Music directory and library</h3><p>I use the idiomatic <code>~/music</code> as a place to store my music. This is where <code>beets</code> will store my music. <code>~/.beets_library.blb</code> stores <code>beets</code>‘ music library (as a SQL database).</p>
+<h3 id="Import-style"><a href="#Import-style" class="headerlink" title="Import style"></a>Import style</h3><p><code>copy: yes</code> makes <code>beets</code> copy the files, instead of moving them. That way, nothing I’m working on suddenly disappears. Moving is obviously faster though, you might want to consider it.</p>
+<h3 id="Path"><a href="#Path" class="headerlink" title="Path"></a>Path</h3><p>The <code>paths</code> defines how albums will be stored in the music directory. I like the <code>Artist name - Album name (year)/Track number - Track name</code> convention, which is expressed by <code>$albumartist - $album ($year)%aunique{}/$track $title</code>. <code>$albumartist</code> is the artist responsible for the album (there can be tracks of different artists on one album), this keeps the album together. <code>%aunique</code> adds a unique identifier in case there are duplicate names.</p>
+<h3 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h3><p>Here are some of the plugins I use I wanted to highlight:</p>
+<ul>
+<li><code>fetchart</code> will grab album covers from the web, and add them to your library</li>
+<li><code>lastgenre</code> will get the genre for songs from <a href="https://last.fm" target="_blank" rel="external">last.fm</a></li>
+<li><code>lyrics</code> will get track lyrics from a variety of sources</li>
+<li><code>scrub</code> will remove extra tags not used or added by <code>beets</code> from music files</li>
+<li><code>convert</code> is used to convert music to other formats</li>
+</ul>
+<h3 id="Convert"><a href="#Convert" class="headerlink" title="Convert"></a>Convert</h3><p>These settings are for when I’m converting music. I convert to MP3 to save space on my phone, I don’t really need FLACs there. <code>copy_album_art</code> will copy album art (obviously), <code>dest</code> selects a destination folder.</p>
+<h1 id="Playing-music-mopidy-as-the-music-server"><a href="#Playing-music-mopidy-as-the-music-server" class="headerlink" title="Playing music: mopidy as the music server"></a>Playing music: mopidy as the music server</h1><p>I use <a href="https://www.mopidy.com/" target="_blank" rel="external">mopidy</a> as a music player. I used to use plain old <code>mpd</code>, but <code>mopidy</code> is more flexible. I <a href="https://docs.mopidy.com/en/latest/installation/debian/" target="_blank" rel="external">installed it using <code>apt</code></a>.</p>
+<h2 id="My-configuration"><a href="#My-configuration" class="headerlink" title="My configuration"></a>My configuration</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">[mpd]</span><br><span class="line">hostname = ::</span><br><span class="line"></span><br><span class="line">[scrobbler]</span><br><span class="line">username = siyck</span><br><span class="line">password = XXXXXXXXXXXXXXXXXXXXX</span><br><span class="line"></span><br><span class="line">[local]</span><br><span class="line">media_dir = /home/thomas/music</span><br><span class="line">excluded_file_extensions =</span><br><span class="line">  .m4a</span><br><span class="line">  .directory</span><br><span class="line">  .html</span><br><span class="line">  .jpeg</span><br><span class="line">  .jpg</span><br><span class="line">  .log</span><br><span class="line">  .nfo</span><br><span class="line">  .png</span><br><span class="line">  .txt</span><br><span class="line"></span><br><span class="line">[soundcloud]</span><br><span class="line">auth_token = X-XXXXX-XXXXXXXX-XXXXXXXXXXXXXXX</span><br></pre></td></tr></table></figure>
+<p><code>hostname = ::</code> binds to all local addresses. The <code>[scrobbler]</code> setup is used to scrobble to <a href="https://last.fm" target="_blank" rel="external">last.fm</a>.</p>
+<p>In <code>[local]</code>, the music directory is defined. I also define some excludes: the defaults and <code>.m4a</code>, since the latest <code>mopidy</code> struggles to play those.</p>
+<p>And lastly, an auth token to play music from Soundcloud.</p>
+<h2 id="Making-mopidy-scan-for-new-music-in-the-library"><a href="#Making-mopidy-scan-for-new-music-in-the-library" class="headerlink" title="Making mopidy scan for new music in the library"></a>Making mopidy scan for new music in the library</h2><p><code>mopidy</code> isn’t constantly watching the library for changes, we have to let it know about them. <code>mopidy local scan</code> does exactly that.</p>
+<p>After scanning, restart <code>mopidy</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$ killall mopidy</span><br><span class="line">$ mopidy &amp;</span><br></pre></td></tr></table></figure>
+<h2 id="Playing-music-ncmpcpp"><a href="#Playing-music-ncmpcpp" class="headerlink" title="Playing music: ncmpcpp"></a>Playing music: ncmpcpp</h2><p>I use <code>ncmpcpp</code> as an <code>mpd</code> frontend. <code>mopidy</code> presents itself as an <code>mpd</code>-compatible server, which means other <code>mpd</code> clients work for it too.</p>
+<p>I’m not going to fully introduce <code>ncmpcpp</code> here, but you can switch to the list of albums by pressing <code>4</code>, then use the mouse or arrow keys to navigate. Searching is simple too: <code>/</code>, your query, and enter. You can play tracks by pressing enter, and queue them using <code>space</code>. For more on <code>ncmpcpp</code>, check out the <a href="https://wiki.archlinux.org/index.php/Ncmpcpp" target="_blank" rel="external">Arch Wiki</a>.</p>
+<p><img src="ncmpcpp.png" alt="Playing music through ncmpcpp"></p>
+<h3 id="ncmpcpp-config"><a href="#ncmpcpp-config" class="headerlink" title="ncmpcpp config"></a>ncmpcpp config</h3><p>One thing that annoys me, is that <code>ncmpcpp</code> sorts by <code>artist</code> by default, and not <code>albumArtist</code>. You can change this in the Media Library view, but to change the default, edit <code>~/.ncmpcpp/config</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">media_library_primary_tag = <span class="string">"album_artist"</span></span><br></pre></td></tr></table></figure>
+<h2 id="Control-through-Android-MPDroid"><a href="#Control-through-Android-MPDroid" class="headerlink" title="Control through Android: MPDroid"></a>Control through Android: MPDroid</h2><p><code>mopidy</code> is <code>mpd</code>-compatible. This means that you can use most <code>mpd</code> clients to control it. For example, I control my laptop’s <code>mopidy</code> remotely using <a href="https://play.google.com/store/apps/details?id=com.namelessdev.mpdroid" target="_blank" rel="external">MPDroid</a>.</p>
+<p><img src="mpdroid.png" alt="Controlling remote mopidy on Android with MPDroid"></p>
+<h1 id="Syncing-to-my-phone"><a href="#Syncing-to-my-phone" class="headerlink" title="Syncing to my phone"></a>Syncing to my phone</h1><p>I don’t always have my laptop with me, but I don’t want to be musicless during those times. I carry my phone with me pretty much all the time, so wouldn’t it be an idea to put music on that?</p>
+<h2 id="Converting"><a href="#Converting" class="headerlink" title="Converting"></a>Converting</h2><p>Music is converted using the <code>beet convert</code> command. I already talked about the configuration of that command earlier. Now we’re actually going to use it. <code>beet convert</code> will convert all the files in your library, this may take a very long time. For now, we will convert a small subset.</p>
+<p>Using <code>beet ls</code>, we check what files will be selected for a query. We try out the query <code>calla</code>, this will match tracks in which the word <code>calla</code> appears:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">$ beet ls calla                                            </span><br><span class="line">Her Name Is Calla - Navigator - I Was on the Back of a Nightingale</span><br><span class="line">Her Name Is Calla - Navigator - The Roots Run Deep</span><br><span class="line">Her Name Is Calla - Navigator - It<span class="string">'s Called, '</span>Daisy<span class="string">'</span><br><span class="line">Her Name Is Calla - Navigator - Ragman Roll</span><br><span class="line">Her Name Is Calla - Navigator - Meridian Arc</span><br><span class="line">Her Name Is Calla - Navigator - Navigator</span><br><span class="line">Her Name Is Calla - Navigator - Burial</span><br><span class="line">Her Name Is Calla - Navigator - A Second Life</span><br><span class="line">Her Name Is Calla - Navigator - It Was Flood</span><br><span class="line">Her Name Is Calla - Navigator - Whale Fall: A Journal</span><br><span class="line">Her Name Is Calla - Navigator - Dreamlands</span></span><br></pre></td></tr></table></figure>
+<p>Looks reasonable. Let’s convert them!</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">$ beet convert calla</span><br><span class="line">Her Name Is Calla - Navigator - I Was on the Back of a Nightingale</span><br><span class="line">Her Name Is Calla - Navigator - The Roots Run Deep</span><br><span class="line">Her Name Is Calla - Navigator - It<span class="string">'s Called, '</span>Daisy<span class="string">'</span><br><span class="line">Her Name Is Calla - Navigator - Ragman Roll</span><br><span class="line">Her Name Is Calla - Navigator - Meridian Arc</span><br><span class="line">Her Name Is Calla - Navigator - Navigator</span><br><span class="line">Her Name Is Calla - Navigator - Burial</span><br><span class="line">Her Name Is Calla - Navigator - A Second Life</span><br><span class="line">Her Name Is Calla - Navigator - It Was Flood</span><br><span class="line">Her Name Is Calla - Navigator - Whale Fall: A Journal</span><br><span class="line">Her Name Is Calla - Navigator - Dreamlands</span><br><span class="line">Her Name Is Calla - Navigator - Perfect Prime</span><br><span class="line">Convert? (Y/n) </span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/04 Ragman Roll.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/01 I Was on the Back of a Nightingale.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/05 Meridian Arc.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/02 The Roots Run Deep.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/06 Navigator.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/07 Burial.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/08 A Second Life.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/03 It'</span>s Called, <span class="string">'Daisy'</span>.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/08 A Second Life.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/09 It Was Flood.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/03 It<span class="string">'s Called, '</span>Daisy<span class="string">'.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/10 Whale Fall_ A Journal.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/01 I Was on the Back of a Nightingale.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/11 Dreamlands.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/02 The Roots Run Deep.flac</span><br><span class="line">convert: Encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/12 Perfect Prime.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/05 Meridian Arc.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/10 Whale Fall_ A Journal.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/04 Ragman Roll.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/07 Burial.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/12 Perfect Prime.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/09 It Was Flood.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/06 Navigator.flac</span><br><span class="line">convert: Finished encoding /home/thomas/music/Her Name Is Calla - Navigator (2014)/11 Dreamlands.flac</span><br><span class="line">$ ls ~/converted_music/Her\ Name\ Is\ Calla\ -\ Navigator\ \(2014\)</span><br><span class="line">01 I Was on the Back of a Nightingale.mp3  07 Burial.mp3</span><br><span class="line">02 The Roots Run Deep.mp3                  08 A Second Life.mp3</span><br><span class="line">03 It'</span>s Called, <span class="string">'Daisy'</span>.mp3                09 It Was Flood.mp3</span><br><span class="line">04 Ragman Roll.mp3                         10 Whale Fall_ A Journal.mp3</span><br><span class="line">05 Meridian Arc.mp3                        11 Dreamlands.mp3</span><br><span class="line">06 Navigator.mp3                           12 Perfect Prime.mp3</span><br></pre></td></tr></table></figure>
+<p>Looks like it worked!</p>
+<h2 id="Selecting"><a href="#Selecting" class="headerlink" title="Selecting"></a>Selecting</h2><p>My phone is too small to carry my entire music library. That’s why I make a selection of what music to put on it. I manage this in a directory <code>~/phone_music</code>, this is the directory that will be synced to my phone. All that this directory contains, is a bunch of symlinks to <code>~/converted_music/...</code> folders.</p>
+<p>We will select the album from before by symlinking it:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/phone_music$ ln <span class="_">-s</span> ../converted_music/Her\ Name\ Is\ Calla\ -\ Navigator\ \(2014\)/</span><br></pre></td></tr></table></figure>
+<p>I wrote a little script to automate this the first time:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/bin/bash</span><br><span class="line"></span></span><br><span class="line"><span class="keyword">for</span> FILE <span class="keyword">in</span> ../converted_music/*; <span class="keyword">do</span></span><br><span class="line">  <span class="built_in">echo</span> <span class="string">"<span class="variable">$FILE</span> y/n?"</span>;</span><br><span class="line">  <span class="built_in">read</span> CHOICE;</span><br><span class="line">  <span class="keyword">if</span> [ <span class="string">"<span class="variable">$CHOICE</span>"</span> = <span class="string">"y"</span> ]; <span class="keyword">then</span></span><br><span class="line">    <span class="built_in">echo</span> linking <span class="variable">$FILE</span> to $(basename <span class="string">"<span class="variable">$FILE</span>"</span>)</span><br><span class="line">    BASENAME=$(basename <span class="string">"<span class="variable">$FILE</span>"</span>)</span><br><span class="line">    ln <span class="_">-s</span> <span class="string">"<span class="variable">$FILE</span>"</span> <span class="string">"<span class="variable">$BASENAME</span>"</span></span><br><span class="line">    <span class="built_in">echo</span> <span class="string">"<span class="variable">$FILE</span> linked"</span>;</span><br><span class="line">  <span class="keyword">fi</span>;</span><br><span class="line"><span class="keyword">done</span>;</span><br></pre></td></tr></table></figure>
+<h2 id="rsync-server-on-my-phone-SSHelper"><a href="#rsync-server-on-my-phone-SSHelper" class="headerlink" title="rsync server on my phone: SSHelper"></a>rsync server on my phone: SSHelper</h2><p>I tested out multiple solutions for syncing to my phone (Samba server on my laptop, USB OTG cable, mounting my phone…) but none were particulary reliable or handy. The solution I came up with was running a server on my phone, and rsyncing from my laptop.</p>
+<p><a href="http://arachnoid.com/android/SSHelper/" target="_blank" rel="external">SSHelper</a> goes on my Android. After running, I <code>rsync</code> into it from my laptop.</p>
+<p><img src="sshelper.png" alt="SSHelper running"></p>
+<p>Now I run rsync to synchronize:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">$ rsync -avzL --no-perms --no-times --size-only --info=progress2 <span class="_">-e</span> <span class="string">'ssh -p 2222'</span> . 192.168.1.103:SDCard/Music</span><br><span class="line"></span><br><span class="line">SSHelper Version 7.9 Copyright 2014, P. Lutus</span><br><span class="line">Default password is <span class="string">"admin"</span> (recommend: change it)</span><br><span class="line">thomas@192.168.1.103<span class="string">'s password: </span><br><span class="line">sending incremental file list</span><br><span class="line">              0   0%    0.00kB/s    0:00:00 (xfr#0, ir-chk=1000/3131)</span><br><span class="line">Her Name Is Calla - Navigator (2014)/</span><br><span class="line">Her Name Is Calla - Navigator (2014)/01 I Was on the Back of a Nightingale.mp3</span><br><span class="line">      4,208,841   0%    2.35MB/s    0:00:01 (xfr#1, ir-chk=1006/3162)</span><br><span class="line">Her Name Is Calla - Navigator (2014)/02 The Roots Run Deep.mp3</span><br><span class="line">     10,320,332   0%    1.44MB/s    0:00:06 (xfr#2, ir-chk=1016/3162)</span><br><span class="line">Her Name Is Calla - Navigator (2014)/03 It'</span>s Called, <span class="string">'Daisy'</span>.mp3</span><br><span class="line">     13,354,276   0%    1.39MB/s    0:00:09 (xfr<span class="comment">#3, ir-chk=1015/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/04 Ragman Roll.mp3</span><br><span class="line">     19,973,344   0%    1.31MB/s    0:00:14 (xfr<span class="comment">#4, ir-chk=1014/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/05 Meridian Arc.mp3</span><br><span class="line">     26,848,527   0%    1.26MB/s    0:00:20 (xfr<span class="comment">#5, ir-chk=1013/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/06 Navigator.mp3</span><br><span class="line">     38,621,591   0%    1.25MB/s    0:00:29 (xfr<span class="comment">#6, ir-chk=1012/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/07 Burial.mp3</span><br><span class="line">     46,411,725   0%    1.24MB/s    0:00:35 (xfr<span class="comment">#7, ir-chk=1011/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/08 A Second Life.mp3</span><br><span class="line">     48,063,182   0%    1.25MB/s    0:00:36 (xfr<span class="comment">#8, ir-chk=1010/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/09 It Was Flood.mp3</span><br><span class="line">     57,304,507   0%    1.24MB/s    0:00:44 (xfr<span class="comment">#9, ir-chk=1009/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/10 Whale Fall_ A Journal.mp3</span><br><span class="line">     61,930,675   0%    1.16MB/s    0:00:50 (xfr<span class="comment">#10, ir-chk=1008/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/11 Dreamlands.mp3</span><br><span class="line">     78,548,445   0%    1.11MB/s    0:01:07 (xfr<span class="comment">#11, ir-chk=1007/3162)</span></span><br><span class="line">Her Name Is Calla - Navigator (2014)/12 Perfect Prime.mp3</span><br><span class="line">     83,451,398   0%    1.07MB/s    0:01:14 (xfr<span class="comment">#12, ir-chk=1004/4276)</span></span><br><span class="line"></span><br><span class="line">sent 83,384,321 bytes  received 2,601 bytes  1,048,892.10 bytes/sec</span><br><span class="line">total size is 42,082,835,611  speedup is 504.67</span><br></pre></td></tr></table></figure>
+<p>The beautiful thing is that <code>rsync</code> is built to be robust: if it’s interrupted, for any reason, you can just continue later.</p>
+<h1 id="Listening-on-my-phone"><a href="#Listening-on-my-phone" class="headerlink" title="Listening on my phone"></a>Listening on my phone</h1><p>I used to use <a href="https://play.google.com/store/apps/details?id=com.google.android.music" target="_blank" rel="external">Google Play Music</a>, but I’ve recently made the switch to <a href="https://play.google.com/store/apps/details?id=com.maxmpz.audioplayer" target="_blank" rel="external">Poweramp</a>. I’m not sure if I’ll continue using it. Play Music feels very intuitive and is a breeze to use.</p>
+<h1 id="Keeping-track-last-fm"><a href="#Keeping-track-last-fm" class="headerlink" title="Keeping track: last.fm"></a>Keeping track: last.fm</h1><p><a href="http://www.last.fm/" target="_blank" rel="external">last.fm</a> may have a reputation as a dead site, I still use it to track my music.</p>
+<h2 id="mopidy"><a href="#mopidy" class="headerlink" title="mopidy"></a>mopidy</h2><p><code>mopidy</code> has a scrobbling plugin aptly called <a href="https://github.com/mopidy/mopidy-scrobbler" target="_blank" rel="external">Mopidy-Scrobbler</a>. Configuration is easy:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$ cat ~/.config/mopidy/mopidy.conf</span><br><span class="line">...</span><br><span class="line">[scrobbler]</span><br><span class="line">username = siyck</span><br><span class="line">password = XXXXXXXXXXXXXXXXXX </span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<h2 id="On-my-phone"><a href="#On-my-phone" class="headerlink" title="On my phone"></a>On my phone</h2><p>On my Android phone, I use <a href="https://play.google.com/store/apps/details?id=com.adam.aslfms" target="_blank" rel="external">Simple Last.fm Scrobbler</a>, a no-nonsense scrobbler. It features a cache, in which it stores scrobbles if you’re offline, to scrobble them when you’re back online.</p>
+<h1 id="Legality"><a href="#Legality" class="headerlink" title="Legality"></a>Legality</h1><p>What we did here was ripping a CD for personal use. We also placed it on our phone. In Belgium, this is legal, as it falls under “private copies”. For more information, see <a href="http://economie.fgov.be/nl/ondernemingen/Intellectuele_Eigendom/auteursrecht/Bescherming_door_auteursrecht/privekopie/" target="_blank" rel="external">here</a>. Obviously, uploading this to the internet or a Bittorrent network is not legal, and not ethical either.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2016/how-i-manage-my-music/" data-id="ciqu2unw100055ulk4eim90z3" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2016/how-i-manage-my-music/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/libreoffice-mail-merge/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Using MacWire DI in an existing Play! Framework 2.3 application</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2016/how-i-manage-my-music/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

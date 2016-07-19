@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>My annoyances with ASP.NET MVC 5 | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="After working in college with ASP.NET MVC 5 for a year, I found it to be a modern and decent framework. I still have some gripes with it, which I will outline in this post.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="My annoyances with ASP.NET MVC 5">
+<meta property="og:url" content="http://thomastoye.be/2015/asp_net_annoyances/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="After working in college with ASP.NET MVC 5 for a year, I found it to be a modern and decent framework. I still have some gripes with it, which I will outline in this post.">
+<meta property="og:updated_time" content="2016-04-26T08:14:35.747Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="My annoyances with ASP.NET MVC 5">
+<meta name="twitter:description" content="After working in college with ASP.NET MVC 5 for a year, I found it to be a modern and decent framework. I still have some gripes with it, which I will outline in this post.">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-asp_net_annoyances" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/asp_net_annoyances/" class="article-date">
+  <time datetime="2015-02-09T11:00:00.000Z" itemprop="datePublished">2015-02-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      My annoyances with ASP.NET MVC 5
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>After working in college with ASP.NET MVC 5 for a year, I found it to be a modern and decent framework. I still have some gripes with it, which I will outline in this post.</p>
+<a id="more"></a>
+<h2 id="Route-safety"><a href="#Route-safety" class="headerlink" title="Route safety"></a>Route safety</h2><p>By far my biggest gripe. There is no reverse routing! I like to know at compile whether or not I made any typos when referencing a route.</p>
+<p>I wanted to remove the default index page in a new project. Well, surprise at runtime, because there are these lingering links everywhere that might or might not still link to iti.</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><pre><code>@Html.ActionLink(&quot;Back to list&quot;, &quot;Index&quot;)
+</code></pre><p>But all methods that generate a link to a route have this API, which I find confusing: you first specify the name of the action, then the name of the controller if you want to use a different one. I have to think every time I need to insert one.</p>
+<h3 id="How-can-it-be-improved"><a href="#How-can-it-be-improved" class="headerlink" title="How can it be improved?"></a>How can it be improved?</h3><p>Here’s how Play!2 solves this:</p>
+<p>All routes are defined in a central <code>conf\routes</code> files. Based on this file, a reverse router is generated that is also typesafe.</p>
+<p>Snippet of conf/routes<br>Compiled reverse router class image</p>
+<p>Doing it exactly as Play! sacrifices annotation-based routing, that’s true. But in principle, this reverse routing class could also be generated from annotations.</p>
+<h2 id="Slow-turn-around"><a href="#Slow-turn-around" class="headerlink" title="Slow turn-around"></a>Slow turn-around</h2><p>I miss hitting refresh in my browser and seeing changes immediately. I even had a live-reload feature in a node.js build that would update my browser automatically when I changed a file! The <code>debug -&gt; stop -&gt; edit -&gt; start</code> cycle is way to slow. I would still whine if I had to wait ten seconds, but at the moment I wait some two minutes for a solution with two relatively vanilla ASP.NET MVC projects in it. What is taking it so long?</p>
+<h3 id="How-can-this-be-improved"><a href="#How-can-this-be-improved" class="headerlink" title="How can this be improved?"></a>How can this be improved?</h3><p>Make it faster! I don’t know how it can be this slow in the first place. Maybe compile in the background while waiting?</p>
+<h2 id="NuGet"><a href="#NuGet" class="headerlink" title="NuGet"></a>NuGet</h2><p>I don’t know a lot about <code>NuGet</code>, but I used a couple of packages and I was disappointed. It seems like packages are gods, they can do whatever they want to your project. They should be self-contained. They should not be able to <a href="https://github.com/JamesNK/Newtonsoft.Json/blob/ee170dc5510bb3ffd35fc1b0d986f34e33c51ab9/Build/install.ps1#L3" target="_blank" rel="external">open web pages when installing</a>. They should not be able to <a href="http://www.wenda.io/questions/3014489/executing-c-sharp-code-in-nuget-package.html" target="_blank" rel="external">execute arbitrary code when installing</a>.</p>
+<p>As much as I like that they saw the light and brought a package manager to M$ country, I can’t be happy with this.</p>
+<h3 id="How-can-this-be-improved-1"><a href="#How-can-this-be-improved-1" class="headerlink" title="How can this be improved?"></a>How can this be improved?</h3><ul>
+<li>Use a sane format for managing dependencies. Stop XML! I should not have to use a GUI/CLI utility when I want to CRUD a dependency of my project.</li>
+<li>Don’t let packages execute arbitrary code. Do away with <code>.ps1</code> files. And fire the guy that came up with it.</li>
+<li>Dependencies should not be applied directly to my project. I install a package, and suddenly there’s a slew of new files in folders of <strong>my</strong> project. What the…?</li>
+</ul>
+<p>Here’s how sbt handles dependency declaration:</p>
+<pre><code>libraryDependencies ++= Seq(
+    &quot;org.webjars&quot; % &quot;bootstrap&quot; % &quot;3.1.1-2&quot;,
+    &quot;com.h2database&quot; % &quot;h2&quot; % &quot;1.3.175&quot;,
+    &quot;mysql&quot; % &quot;mysql-connector-java&quot; % &quot;5.1.21&quot;,
+    &quot;joda-time&quot; % &quot;joda-time&quot; % &quot;2.7&quot;
+)
+</code></pre><p>Here’s how npm does it:</p>
+<pre><code>{
+    // ...
+    },
+    &quot;dependencies&quot;: {
+    &quot;express&quot;: &quot;~3.3.4&quot;,
+    &quot;jade&quot;: &quot;~0.34.0&quot;,
+    &quot;nconf&quot;: &quot;^0.6.9&quot;,
+    &quot;winston&quot;: &quot;^0.7.3&quot;
+    }
+}
+</code></pre><p>npm has a folder in which it stores packages called <code>node_modules</code>. Dependencies never leave their folder and never touch my project files.</p>
+<h2 id="Too-much-magic"><a href="#Too-much-magic" class="headerlink" title="Too much magic"></a>Too much magic</h2><p>I had a method called GetXyz in a Web API Controller. To experiment, I wanted to convert it into a <code>POST</code>, so I changed <code>[HttpGet]</code> to <code>[HttpPost]</code> above the method. And everything worked as it should have worked!</p>
+<p>Except it didn’t. I’ll spare you the head-ache, but ASP.NET automatically makes methods starting with “Get” available as HTTP <code>GET</code>s, no matter what you annotate it with. It doesn’t even warn you about that, nevermind refusing to compile.</p>
+<p>Sure, you say, but you new should never have <code>POST</code> method starting with “Get…”. Fair point, I was just trying some stuff out, but that’s no excuse for ASP.NET silently ignoring my very clear directions.</p>
+<p>And that’s not the only thing. How about the fact that you can’t supply value types in a <code>POST</code> body (they have to be part of the query string)? The default HTTP method for MVC controllers is <code>GET</code> but for Web API Controllers it’s <code>POST</code> (?? sure ??)</p>
+<p>Convention-based routing is just plain dangerous in my opinion. New method in your controller? Surprise! It’s automagically reachable. I can see people making mistakes with this. Oh, security nightmare…</p>
+<p>And then there’s creating a new project. <a href="https://github.com/thomastoye/nmct-dropclone/commit/950df0929c9d8fabad7d3049e07ef734080ca061" target="_blank" rel="external">29,471 additions</a> for a new ASP.NET MVC project. Makes wonder if ASP.NET is a framework or the project scaffold here. Come on, it litters my <code>Scripts</code> folder with jQuery and bootrap and some other stuff… I already said it, this is not the place for dependencies. We have <a href="http://bower.io" target="_blank" rel="external">bower</a>, which manages client-side dependencies (it’s not the best, but it works). We have <a href="http://www.webjars.org/" target="_blank" rel="external">WebJARs</a>, which bundle client-side dependencies in a JAR. But placing them directly in my public folder? Why should I have <code>bootstrap.min.css</code> directly under <strong>my</strong> source control? Why should I be responsible for managing those dependencies when tools can do that?</p>
+<h2 id="Error-pages"><a href="#Error-pages" class="headerlink" title="Error pages"></a>Error pages</h2><p>And now for a lighter one. This really is nit-picking, but can we get some more modern error templates please? :)</p>
+<p>Image of ASP.NET error page<br>Image of Play!2 error</p>
+<p>It’s small things like this that make the dev experience so much better!</p>
+<h2 id="Dynamic-views"><a href="#Dynamic-views" class="headerlink" title="Dynamic views"></a>Dynamic views</h2><h2 id="Partial-views"><a href="#Partial-views" class="headerlink" title="Partial views"></a>Partial views</h2><h2 id="Entity-Framework-black-magic"><a href="#Entity-Framework-black-magic" class="headerlink" title="Entity Framework black magic"></a>Entity Framework black magic</h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/asp_net_annoyances/" data-id="ciqu2unvu00035ulkzx7n7oyg" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/asp_net_annoyances/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/slick-with-play/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Slick 2.1 zero to hero
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2015/asp_net_annoyances/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

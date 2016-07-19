@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Slick 2.1 zero to hero | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="(Note: I do not plan to work any more on this post. I will probably rewrite it for Slick 3 when I find the time.)
+As I wanted to get started with Slick, I faced a problem every Slick padawan faces: th">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Slick 2.1 zero to hero">
+<meta property="og:url" content="http://thomastoye.be/2015/slick-with-play/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="(Note: I do not plan to work any more on this post. I will probably rewrite it for Slick 3 when I find the time.)
+As I wanted to get started with Slick, I faced a problem every Slick padawan faces: th">
+<meta property="og:image" content="http://thomastoye.be/needs_evolution_1.png">
+<meta property="og:image" content="http://thomastoye.be/products_table_in_h2_browser.png">
+<meta property="og:image" content="http://thomastoye.be/repl_zen.png">
+<meta property="og:updated_time" content="2016-04-26T08:14:35.779Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Slick 2.1 zero to hero">
+<meta name="twitter:description" content="(Note: I do not plan to work any more on this post. I will probably rewrite it for Slick 3 when I find the time.)
+As I wanted to get started with Slick, I faced a problem every Slick padawan faces: th">
+<meta name="twitter:image" content="http://thomastoye.be/needs_evolution_1.png">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-slick-with-play" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/slick-with-play/" class="article-date">
+  <time datetime="2015-02-14T23:00:00.000Z" itemprop="datePublished">2015-02-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Slick 2.1 zero to hero
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(Note: I do not plan to work any more on this post. I will probably rewrite it for Slick 3 when I find the time.)</p>
+<p>As I wanted to get started with Slick, I faced a problem every Slick padawan faces: the almost complete lack of resources. There’s a rather confusing Activator tutorial, <a href="http://slick.typesafe.com/doc/2.1.0/" target="_blank" rel="external">some docs</a>, the generated <a href="http://slick.typesafe.com/doc/2.1.0/api/#package" target="_blank" rel="external">ScalaDoc</a>, and <a href="https://mackler.org/LearningSlick2/" target="_blank" rel="external">Adam Mackler’s Learning Slick</a>. But that’s it. And I found neither of those to be particulary easy to read.</p>
+<p>But the situation is improving, the official docs now mostly contain everything you should now, though there is no real “path” to follow, and you can’t possibly learn it all in one go. Play will probably bring an influx of new Slick users, which will help with the ecosystem.</p>
+<p>Here’s my try at a easy to follow tutorial that will help you to get started with Slick. Be sure to leave any comments, remarks… Pull requests are also much appreciated!</p>
+<p>There’s a number of links to the Slick source code. Since most of them refer to line numbers, I linked to the state of a specific commit on GitHub, so we’re both looking at the same thing, even when the code is updated.</p>
+<p>This post focuses mainly on using Slick with Play!2.0</p>
+<a id="more"></a>
+<h2 id="Getting-set-up"><a href="#Getting-set-up" class="headerlink" title="Getting set up"></a>Getting set up</h2><p>I mainly want to learn Slick to use it with Play!2. This guide will work with Play too, because it includes everything you need to get started (it starts the H2 database in memory, shows when your database needs to evolve with the SQL that will be run, it automatically generates those evolutions, an easy way to start the H2 web viewer, etc.). Keep in mind that I’m still learning, I may make mistakes in these recipes, or just be plain wrong.</p>
+<p>Here’s how you get ready:</p>
+<ol>
+<li>Install <a href="http://typesafe.com/get-started" target="_blank" rel="external">Typesafe Activator</a></li>
+<li>Optional but recommended: add Activator to your <code>PATH</code></li>
+<li>Start Activator UI (with <code>activator ui</code>, or <code>path/to/activator/bin/activator ui</code> if you didn’t add it to your path, or by clicking on the <code>activator.bat</code> file if you’re on Windows) and create a new project using the “Play Scala Seed”</li>
+<li>Configure your <code>application.conf</code>: enable the default H2 in-memory database, and add or uncomment this line: <code>slick.default=&quot;models.*&quot;</code></li>
+<li>Add the following lines to your <code>build.sbt</code> (not all of them are needed for all of the recipes here):</li>
+</ol>
+<pre><code>&quot;com.typesafe.slick&quot; %% &quot;slick&quot; % &quot;2.1.0&quot;,
+&quot;com.typesafe.play&quot; %% &quot;play-slick&quot; % &quot;0.8.0&quot;,
+&quot;com.h2database&quot; % &quot;h2&quot; % &quot;1.3.175&quot;,
+&quot;mysql&quot; % &quot;mysql-connector-java&quot; % &quot;5.1.21&quot;
+</code></pre><p>You should now reload the project.</p>
+<h2 id="Creating-a-simple-table"><a href="#Creating-a-simple-table" class="headerlink" title="Creating a simple table"></a>Creating a simple table</h2><p>Let’s say we have a simple need: we want to create a table that tracks products. Each product has an ID, name and a description.</p>
+<p>A class for our product would look like this:</p>
+<pre><code>case class Product(id: Long, name: String, description: String)
+</code></pre><p>How do we get from a case class to the database?</p>
+<pre><code>package models
+import play.api.db.slick.Config.driver.simple._
+
+class Products(tag: Tag) extends Table[(Long, String, String)](tag, &quot;MY_PRODUCTS_TABLE&quot;) {
+  def id = column[Long](&quot;ID&quot;, O.PrimaryKey)
+  def name = column[String](&quot;NAME&quot;)
+  def description = column[String](&quot;DESC&quot;)
+
+  def * = (id, name, description)
+}
+</code></pre><p>That’s our basic table. It represents a table in our database. Let’s go over this:</p>
+<ol>
+<li>Since we’re working with the Play Framework, we place models in the <code>models</code> package</li>
+<li>We create a new class that inherits from Table, with a type parameter <code>(Long, String, String)</code>. The type paramter is used to indicate what kind of data we want to store.</li>
+<li>For every column we want to create, we make a method. As we have an id of type Long on our case class, we use <code>def id = column[Long](&quot;ID&quot;, O.PrimaryKey)</code>. The type parameter here obviously defines what kind of data we want to store. Possible values are Byte, Short, Int, Long, BigDecimal, Float, Double, Boolean, java.sql.Date, java.sql.Timestamp, and some more types. You can find a list <a href="http://slick.typesafe.com/doc/2.0.0/schemas.html#tables" target="_blank" rel="external">here</a>, under the heading Tables. Then comes the name we want for the column in the database, and finally the options we want. Here, the name of the column is “ID”, and this column will be a primary key.</li>
+<li>There’s a method called <code>*</code> (pronounced “star”), this is the “star projection”. Every table needs this. It’s defined on <a href="http://slick.typesafe.com/doc/2.1.0/api/#scala.slick.lifted.AbstractTable" target="_blank" rel="external">AbstractTable</a>, and it must match the row type (type parameter of the <code>Table</code> class).</li>
+</ol>
+<p>If you run your Play app, you should see this (if you don’t, check your <code>application.conf</code>: did you uncomment all the database lines, did you add <code>slick.default=&quot;models.*&quot;</code>?):</p>
+<p><img src="needs_evolution_1.png" alt="Database default needs evolution"></p>
+<p>Slick generated the following SQL from our <code>Table</code>:</p>
+<pre><code>create table &quot;MY_PRODUCTS_TABLE&quot; (&quot;ID&quot; BIGINT NOT NULL PRIMARY KEY,&quot;NAME&quot; VARCHAR NOT NULL,&quot;DESC&quot; VARCHAR NOT NULL)
+</code></pre><p>Clicking on “Apply this script now!” will run that script against the database. You can stop Play and open the H2 web viewer by typing <code>h2-browser</code> on the sbt/activator console. If you then apply your script, you’ll see a new table in there:</p>
+<p><img src="products_table_in_h2_browser.png" alt="Products table in the H2 browser"></p>
+<p>Keep in mind that you won’t see anything in the H2 browser if you’re doing things in the Scala REPL, because that starts a seperate H2 instance.</p>
+<h2 id="Using-case-classes-instead-of-tuples"><a href="#Using-case-classes-instead-of-tuples" class="headerlink" title="Using case classes instead of tuples"></a>Using case classes instead of tuples</h2><p>For now, we’ve created <code>Table[T]</code>s with a tuple as the type argument. That tuple can be converted to a class, but then we’d have to do that manually. Fortunately, we can also parameterize <code>Table[T]</code> with a class:</p>
+<pre><code>case class Product(id: Long, name: String, description: String)
+
+class Products(tag: Tag) extends Table[Product](tag, &quot;MY_PRODUCTS_TABLE&quot;) { 
+  def id = column[Long](&quot;ID&quot;, O.PrimaryKey)
+  def name = column[String](&quot;NAME&quot;)
+  def description = column[String](&quot;DESC&quot;)
+
+  def * = (id, name, description) &lt;&gt; (Product.tupled, Product.unapply _)
+}
+</code></pre><p>The only things we changed were the type argument (<code>Table[(Long, String, String)]</code> to <code>Table[Product]</code>) and the star projection (<code>def * = (id, name, description)</code> to <code>def * = (id, name, description) &lt;&gt; (Product.tupled, Product.unapply _)</code>).</p>
+<p>The <code>&lt;&gt;</code> method is used to <a href="https://github.com/slick/slick/blob/7925bca085b162cab04f0aec9ff9000a05d620cc/src/main/scala/scala/slick/lifted/AbstractTable.scala#L32" target="_blank" rel="external">map the star projection to a custom entity type</a>. For now, you can just remember that you can use a case class as the <code>Table[T]</code> type parameter as long as you use <code>&lt;&gt;</code> to map the tuple to that case class.</p>
+<h2 id="Intermezzo-tupled-and-unapply-with-case-classes"><a href="#Intermezzo-tupled-and-unapply-with-case-classes" class="headerlink" title="Intermezzo: tupled and unapply with case classes"></a>Intermezzo: <code>tupled</code> and <code>unapply</code> with case classes</h2><p>When we started using case classes instead of tuples, we used two new methods, <code>tupled</code> and <code>unapply</code>. What’s up with them?</p>
+<pre><code>case class Product(id: Long, name: String, description: String)
+</code></pre><p>Remember that we can create new instances of a case class like this (you don’t need to use <code>new</code>):</p>
+<pre><code>scala&gt; Product(1, &quot;Laptop&quot;, &quot;A brand new laptop&quot;)
+res0: Product = Product(1,Laptop,A brand new laptop)
+</code></pre><p>Also remember that this is actually sugar for calling the <code>apply</code> method:</p>
+<pre><code>scala&gt; Product.apply(1, &quot;Laptop&quot;, &quot;A brand new laptop&quot;)
+res1: Product = Product(1,Laptop,A brand new laptop)
+</code></pre><p><code>unapply</code> sounds like it’s the inverse of <code>apply</code>. It’s defined on the companion object of the case class:</p>
+<pre><code>scala&gt; Product.unapply(res1)
+res2: Option[(Long, String, String)] = Some((1,Laptop,A brand new laptop))
+</code></pre><p>Hmm, we got back an Option of a triple (<code>Tuple3</code>). The tripled is wrapped in an <code>Option</code> for the reason defined <a href="http://docs.scala-lang.org/tutorials/tour/extractor-objects.html" target="_blank" rel="external">here</a> (“[…] If it returns a single sub-value of type <code>T</code>, return an <code>Option[T]</code>“). <code>tupled</code> goes the other way around: it takes a <code>Tuple3</code> and constructs a <code>Product</code> for us. This method is also defined on the companion object:</p>
+<pre><code>scala&gt; Product.tupled (2,&quot;Desktop&quot;, &quot;A new desktop&quot;)
+res3: Product = Product(2,Desktop,A new desktop)
+</code></pre><p>The following is only logical then:</p>
+<pre><code>scala&gt; val product = Product(1, &quot;Laptop&quot;, &quot;A brand new laptop&quot;)
+product: Product = Product(1,Laptop,A brand new laptop)
+
+scala&gt; product == Product.tupled(Product.unapply(product).get)
+res4: Boolean = true
+</code></pre><h2 id="Simple-table-CRUD"><a href="#Simple-table-CRUD" class="headerlink" title="Simple table CRUD"></a>Simple table CRUD</h2><p><a href="http://slick.typesafe.com/doc/2.1.0/queries.html" target="_blank" rel="external">Relevant documentation on queries</a></p>
+<p>We now have a simple table, but what can we do with it? You might notice there’s no methods for data alteration on the <code>Table</code> class. Indeed, for data operations, we need an instance of <code>TableQuery</code>.</p>
+<pre><code>val tq = TableQuery[Products] // with Products being the Table[Product] we defined earlier
+</code></pre><p>We’ll start with the easiest methods available on <code>tq</code>.</p>
+<pre><code>tq.list
+tq.insert(Product(1, &quot;Laptop&quot;, &quot;A brand new laptop&quot;))
+tq.filter(id === 1)
+tq.filter(id === 1).update(row =&gt; (row.name, row.description).update(&quot;Desktop&quot;, &quot;A brand new desktop&quot;))
+tq.delete
+tq.filter(id === 1).delete
+tq.map(_.id.toUpperCase).run
+tq.length.run
+</code></pre><p>If you want to follow along interactively, see the section “Slick from the REPL”.</p>
+<h3 id="Listing-all-entries-SELECT"><a href="#Listing-all-entries-SELECT" class="headerlink" title="Listing all entries (SELECT)"></a>Listing all entries (SELECT)</h3><p>There’s a method <code>list</code> on <code>TableQuery[T]</code> we can use to “list” everything in the database.</p>
+<pre><code>scala&gt; tq.list
+res0: List[models.Products#TableElementType] = List()
+</code></pre><p>Currently, there’s nothing in there. If you run the examples in the next section, you should see something like this:</p>
+<pre><code>scala&gt; tq.list
+res1: List[models.Products#TableElementType] = List(Product(1,Laptop,A brand new laptop), Product(2,Eggs,A carton of eggs), Product(3,Bike,A red bike))
+</code></pre><h3 id="Inserting-a-new-entry-INSERT"><a href="#Inserting-a-new-entry-INSERT" class="headerlink" title="Inserting a new entry (INSERT)"></a>Inserting a new entry (INSERT)</h3><p>If you thought listing was easy, wait until you see inserting!</p>
+<h4 id="Inserting-a-single-thing"><a href="#Inserting-a-single-thing" class="headerlink" title="Inserting a single thing"></a>Inserting a single thing</h4><p>There are multiple ways to insert things into our table:</p>
+<pre><code>scala&gt; tq.insert(Product(1, &quot;Laptop&quot;, &quot;A brand new laptop&quot;))
+res2: Int = 1
+</code></pre><p>Here, we inserted a tuple using <code>insert</code>. We can verify this with what we learned in the previous step:</p>
+<pre><code>scala&gt; tq.list
+res3: List[models.Products#TableElementType] = List(Product(1,Laptop,A brand new laptop))
+</code></pre><p>Don’t mind the return type. What matters is that the insert succeeded. Another way to insert is to use the <code>+=</code> method, which looks more natural:</p>
+<pre><code>scala&gt; tq += Product(2, &quot;Eggs&quot;, &quot;A carton of eggs&quot;)
+res4: Int = 1
+</code></pre><p>The <code>+=</code> method just performs an <code>insert</code> under the hood, as proven by <a href="https://github.com/slick/slick/blob/d4f019fc13e9cd0311e85152488b63cba44e7119/src/main/scala/scala/slick/driver/JdbcInsertInvokerComponent.scala#L72" target="_blank" rel="external">this line in <code>JdbcInsertInvokeComponent.scala</code></a>:</p>
+<pre><code>final def += (value: U)(implicit session: Backend#Session): SingleInsertResult = insert(value)
+</code></pre><p>But look at <code>res2</code> and <code>res1</code>: <code>insert</code> gave us back something, an <code>Int</code>. </p>
+<p>To find out what this <code>Int</code> means, we’ll dig a little. Your bet is probably on “number of inserted rows”, and to spoil the fun, you’d be right. If your not interested in this little detour, you can just skip ahead to the next section.</p>
+<p>In the definition of <code>+=</code> above, where we see it calls <code>insert</code>, we also see that it returns a <code>SingleInsertResult</code>. This type, described as “The result type when inserting a single value” in the documentation, is defined <a href="http://slick.typesafe.com/doc/2.1.0/api/#scala.slick.profile.BasicInsertInvokerComponent$InsertInvokerDef" target="_blank" rel="external">here</a>, but there’s no implementation. If I understand this, that’s up to a specific driver to choose a type to return for an insert.</p>
+<p>On trait <code>CountingInsertInvokerDef</code> in <code>JdbcInsertInvokerComponent</code>, <code>SingleInsertResult</code> is defined as an <code>Int</code>, and <code>CountingInsertInvokerDef</code> is described as “An InsertInvoker that returns the number of affected rows.”. You might be wondering how it arrives at that specific <code>InsertInvoker</code>, if you also took a look at the <a href="https://github.com/slick/slick/blob/d4f019fc13e9cd0311e85152488b63cba44e7119/src/main/scala/scala/slick/driver/JdbcInsertInvokerComponent.scala" target="_blank" rel="external">source</a>, you’d see there are multiple <code>XxxInsertInvokers</code>. The answer is the type <code>InsertInvoker[T]</code>, “The type of insert invokers returned by the driver”, which is <a href="https://github.com/slick/slick/blob/d4f019fc13e9cd0311e85152488b63cba44e7119/src/main/scala/scala/slick/driver/JdbcInsertInvokerComponent.scala#L16" target="_blank" rel="external">set to JdbcDriver.CountingInsertInvokerDef[T]</a> (the description is in <a href="http://slick.typesafe.com/doc/2.1.0/api/#scala.slick.driver.JdbcInsertInvokerComponent" target="_blank" rel="external">the docs</a>, I assume inherited from <code>BasicInsertInvokerComponent</code> since it’s not annotated in the docs - no idea ScalaDoc did this).</p>
+<h4 id="Inserting-multiple-things-at-once"><a href="#Inserting-multiple-things-at-once" class="headerlink" title="Inserting multiple things at once"></a>Inserting multiple things at once</h4><p>There’s also a <code>++=</code> operator, which allows us to insert multiple things all at once:</p>
+<pre><code>scala&gt; tq ++= List(Product(3, &quot;Bike&quot;, &quot;A red bike&quot;), Product(4, &quot;Milk&quot;, &quot;A gallon of milk&quot;))
+res5: Option[Int] = Some(2)
+</code></pre><p>This time, we don’t get an <code>Int</code>, but an <code>Option[Int]</code> back. I don’t know why it’s wrapped in <code>Option</code>, I’m guessing some drivers don’t support multiple insert?</p>
+<h3 id="Searching-entries-SELECT-WHERE"><a href="#Searching-entries-SELECT-WHERE" class="headerlink" title="Searching entries (SELECT WHERE)"></a>Searching entries (SELECT WHERE)</h3><p>Now that we have seen how we can select all things in our database, it’s time to see how we can filter them. Of course, we could work directly on the result:</p>
+<pre><code>scala&gt; tq.list
+res0: List[models.Products#TableElementType] = List(Product(1,Laptop,A brand new laptop), Product(2,Eggs,A carton of eggs), Product(3,Bike,A red bike), Product(4,Milk,A gallon of milk))
+
+scala&gt; res0.filter(_.id &gt; 2)
+res1: List[models.Products#TableElementType] = List(Product(3,Bike,A red bike), Product(4,Milk,A gallon of milk))
+</code></pre><p>But that’s not a good idea: imagine if this table had tens of thousands of products in it: a list of tens of thousands of products would be returned by the database, and our program would have to sort through them. What a waste, we can offload this task to the database!</p>
+<p>To do that, instead of <code>list</code>, call <code>filter</code> on <code>tq</code>:</p>
+<pre><code>scala&gt; tq.filter(_.id &gt; 2L)
+res2: scala.slick.lifted.Query[models.Products,models.Products#TableElementType,Seq] = scala.slick.lifted.WrappingQuery@78d5a6ec
+</code></pre><p>Since we defined <code>id</code> as a <code>Long</code>, we need to compare it with a <code>Long</code>, you’ll get an error otherwise. You maybe expected to get back a list of products with an id bigger than 2. But instead, we got back a <code>WrappingQuery</code>! What’s going on?</p>
+<p>Slick wants to avoid making trips to the database, because that’s expensive. Instead, it tries combine as much as it can into a query. We can explicitely tell it to run the query with <code>run</code>:</p>
+<pre><code>scala&gt; tq.filter(_.id &gt; 2L).run
+res3: Seq[models.Products#TableElementType] = Vector(Product(3,Bike,A red bike), Product(4,Milk,A gallon of milk))
+</code></pre><p>Now we get what we expected! The reason we didn’t have to <code>run</code> our earlier queries is because they were “complete”, what more can you do with an <code>INSERT INTO</code>? You can’t add a <code>GROUP BY</code> or <code>WHERE</code>, it’s a complete statement and Slick will go ahead and run it, saving you some typing. <code>list</code>, you may say, isn’t complete, I still could add some clauses to that in SQL! That’s true, but since getting everything from a table is so common, <code>list</code> will return immediately. If you want to do a <code>WHERE</code>, you use <code>filter</code> directly on the <code>TableQuery[T]</code>. If you want to do a <code>GROUP BY</code>, you use <code>groupBy</code>.</p>
+<p>NOTE paragraph above doesn’t seem to be fully true: <code>groupBy</code> doesn’t need run either. TODO: investigate</p>
+<p>You can compose <code>filters</code>:</p>
+<pre><code>scala&gt; tq.filter(_.id &gt; 1L).filter(_.id &lt; 4L)
+res4: scala.slick.lifted.Query[models.Products,models.Products#TableElementType,Seq] = scala.slick.lifted.WrappingQuery@446bd64a
+
+scala&gt; tq.filter(_.id &gt; 1L).filter(_.id &lt; 4L).run
+res5: Seq[models.Products#TableElementType] = Vector(Product(2,Eggs,A carton of eggs), Product(3,Bike,A red bike))
+</code></pre><p>If you want to know what query Slick will run, you can invoke <code>selectStatement</code> instead of run:</p>
+<pre><code>scala&gt; tq.filter(_.id &gt; 1L).filter(_.id &lt; 4L).selectStatement
+res6: String = select x2.&quot;ID&quot;, x2.&quot;NAME&quot;, x2.&quot;DESC&quot; from &quot;MY_PRODUCTS_TABLE&quot; x2 where (x2.&quot;ID&quot; &gt; 1) and (x2.&quot;ID&quot; &lt; 4)
+</code></pre><p>That looks pretty clean!</p>
+<p>What if we want an exact match? We want the product with id 2:</p>
+<pre><code>scala&gt; tq.filter(_.id == 2L)
+&lt;console&gt;:19: error: inferred type arguments [Boolean] do not conform to method filter&apos;s type parameter bounds [T &lt;: scala.slick.lifted.Column[_]]
+              tq.filter(_.id == 2L)
+                 ^
+&lt;console&gt;:19: error: type mismatch;
+ found   : models.Products =&gt; Boolean
+ required: models.Products =&gt; T
+              tq.filter(_.id == 2L)
+                             ^
+&lt;console&gt;:19: error: Type T cannot be a query condition (only Boolean, Column[Boolean] and Column[Option[Boolean]] are allowed
+              tq.filter(_.id == 2L)
+</code></pre><p>This is because we forgot we’re not working on real Scala collection. We’re working with Slick here. Slick merely provides a collection-like API, that it then translates into SQL queries. To do that, it “lifts” types, you should read about that <a href="http://slick.typesafe.com/doc/2.1.0/introduction.html#index-6" target="_blank" rel="external">here</a> first. The take-away is that you can’t use <code>==</code> because Slick can’t override that, instead you should use <code>===</code> (and <code>=!=</code> instead of <code>!=</code>):</p>
+<pre><code>scala&gt; tq.filter(_.id === 2L).run
+res7: Seq[models.Products#TableElementType] = Vector(Product(2,Eggs,A carton of eggs))
+scala&gt; tq.filter(_.id =!= 2L).run
+res8: Seq[models.Products#TableElementType] = Vector(Product(1,Laptop,A brand new laptop), Product(3,Bike,A red bike), Product(4,Milk,A gallon of milk))
+</code></pre><h3 id="Selecting-certain-columns-SELECT-…-…"><a href="#Selecting-certain-columns-SELECT-…-…" class="headerlink" title="Selecting certain columns (SELECT …, …)"></a>Selecting certain columns (SELECT …, …)</h3><p>When you only need certain columns, you can use <code>map</code>. Say we want a list of all the identifiers:</p>
+<pre><code>scala&gt; tq.map(_.id).run
+res9: Seq[Long] = Vector(1, 2, 3, 4)
+</code></pre><p>Multiple columns are just as easy, but we can’t use placeholder syntax:</p>
+<pre><code>scala&gt; tq.map(row =&gt; (row.name, row.description)).run
+res10: Seq[(String, String)] = Vector((Laptop,A brand new laptop), (Eggs,A carton of eggs), (Bike,A red bike), (Milk,A gallon of milk))
+</code></pre><h3 id="Updating-entries-UPDATE"><a href="#Updating-entries-UPDATE" class="headerlink" title="Updating entries (UPDATE)"></a>Updating entries (UPDATE)</h3><p>For updating, we first need to select the columns we want to update with <code>map</code> (we’ll run into primary key violations otherwise), then provide a new value for those columns with <code>update</code>:</p>
+<pre><code>scala&gt; tq.map(_.description).update(&quot;My new description&quot;)
+res11: Int = 4
+
+scala&gt; tq.list
+res12: List[models.Products#TableElementType] = List(Product(1,Laptop,My new description), Product(2,Eggs,My new description), Product(3,Bike,My new description), Product(4,Milk,My new description))
+</code></pre><p>…And it might be a good idea to filter which rows we want to update first:</p>
+<pre><code>scala&gt; tq.filter(_.id === 3L).map(_.description).update(&quot;A red bike&quot;)
+res13: Int = 1
+</code></pre><p>Take a moment to appreciate how nice this looks!</p>
+<h3 id="Deleting-entries-DELETE-and-DELETE-WHERE"><a href="#Deleting-entries-DELETE-and-DELETE-WHERE" class="headerlink" title="Deleting entries (DELETE and DELETE WHERE)"></a>Deleting entries (DELETE and DELETE WHERE)</h3><p><code>delete</code> drops rows from the database:</p>
+<pre><code>scala&gt; tq.delete
+res88: Int = 4
+</code></pre><p>Woops. Just as with <code>update</code>, we might want to specify <em>which</em> rows, otherwise it goes ahead and deletes all of them:</p>
+<pre><code>scala&gt; tq ++= List(Product(1,&quot;Laptop&quot;,&quot;A brand new laptop&quot;), Product(2,&quot;Eggs&quot;,&quot;A carton of eggs&quot;), Product(3,&quot;Bike&quot;,&quot;A red bike&quot;), Product(4,&quot;Milk&quot;,&quot;A gallon of milk&quot;))
+res14: Option[Int] = Some(4)
+
+scala&gt; tq.filter(_.id &lt;= 2L).delete
+res15: Int = 2
+
+scala&gt; tq.filter(_.name === &quot;bike&quot;).delete
+res16: Int = 0
+
+scala&gt; tq.filter(_.name === &quot;Bike&quot;).delete
+res17: Int = 1
+</code></pre><p>Take a good look at <code>res16</code> and <code>res17</code>: filtering is case sensitive! If you’ve worked with SQL before, this may surprise you. You can do a case insenstive match by using <code>toLowerCase</code> on the column (see also <a href="http://stackoverflow.com/questions/16700370/case-insensitive-string-comparison-in-slick" target="_blank" rel="external">this anwer</a>):</p>
+<pre><code>scala&gt; tq.filter(_.name.toLowerCase === &quot;milk&quot;).delete
+res18: Int = 1
+</code></pre><p>This method is not the <a href="http://www.scala-lang.org/api/current/index.html#scala.collection.immutable.StringOps@toLowerCase%28%29:String" target="_blank" rel="external">toLowerCase you know and love</a>, but an imposter defined <a href="https://github.com/slick/slick/blob/d4f019fc13e9cd0311e85152488b63cba44e7119/src/main/scala/scala/slick/lifted/ExtensionMethods.scala#L119" target="_blank" rel="external">here</a>. Remember that we’re working with lifted types (<code>Rep[T]</code>), and that all operations on them happen in the database. Comparing is obvious, but other not all operations are. Slick provides support for a lot of operations with a class called <a href="https://github.com/slick/slick/blob/d4f019fc13e9cd0311e85152488b63cba44e7119/src/main/scala/scala/slick/lifted/ExtensionMethods.scala#L119" target="_blank" rel="external">StringColumnExtensionMethods</a>. Remember that if you need to perform an operation on a <code>String</code> (or rather, <code>Rep[String]</code>)!</p>
+<h3 id="Methods-on-columns"><a href="#Methods-on-columns" class="headerlink" title="Methods on columns"></a>Methods on columns</h3><p>As mentioned in the previous paragraph, not all string operations are possible on a string column (<code>Rep[String]</code>), this because not all databases support all of the function Scala has for strings. Those that are, get translated into SQL functions, and are thus performed in the database.</p>
+<pre><code>scala&gt; tq.map(_.name.toUpperCase).selectStatement
+res19: String = select {fn ucase(x2.&quot;NAME&quot;)} from &quot;MY_PRODUCTS_TABLE&quot; x2
+</code></pre><p>You can view all extension methods, as they are called, <a href="https://github.com/slick/slick/blob/d4f019fc13e9cd0311e85152488b63cba44e7119/src/main/scala/scala/slick/lifted/ExtensionMethods.scala#L83" target="_blank" rel="external">here</a>. It’s definitely worth a quick glance.</p>
+<h3 id="Listing-the-number-of-entries-COUNT"><a href="#Listing-the-number-of-entries-COUNT" class="headerlink" title="Listing the number of entries (COUNT(*))"></a>Listing the number of entries (COUNT(*))</h3><p><code>length</code> shows the number of rows in a table:</p>
+<pre><code>scala&gt; tq.length.run
+res20: Int = 4
+
+scala&gt; tq.filter(_.id &gt; 2L).length.run
+res21: Int = 2
+</code></pre><h3 id="Inspecting-generated-SQL"><a href="#Inspecting-generated-SQL" class="headerlink" title="Inspecting generated SQL"></a>Inspecting generated SQL</h3><p>Finally, now that we’ve seen all these ways to create queries, we can inspect the SQL that Slick generates:</p>
+<pre><code>scala&gt; tq.selectStatement
+res30: String = select x2.&quot;ID&quot;, x2.&quot;NAME&quot;, x2.&quot;DESC&quot; from &quot;MY_PRODUCTS_TABLE&quot; x2
+
+scala&gt; tq.filter(_.id &gt; 2L).filter(_.name.reverseString === &quot;kliM&quot;).map(_.description.toLowerCase).selectStatement
+res31: String = select {fn lcase(x2.&quot;DESC&quot;)} from &quot;MY_PRODUCTS_TABLE&quot; x2 where (x2.&quot;ID&quot; &gt; 2) and (reverse(x2.&quot;NAME&quot;) = &apos;kliM&apos;)
+</code></pre><p>Similary, we have <code>insertStatement</code>, <code>updateStatement</code>, <code>deleteStatement</code>:</p>
+<pre><code>scala&gt; tq.insertStatement
+res32: String = insert into &quot;MY_PRODUCTS_TABLE&quot; (&quot;ID&quot;,&quot;NAME&quot;,&quot;DESC&quot;)  values (?,?,?)
+
+scala&gt; tq.updateStatement
+res33: String = update &quot;MY_PRODUCTS_TABLE&quot; set &quot;ID&quot; = ?, &quot;NAME&quot; = ?, &quot;DESC&quot; = ?
+
+scala&gt; tq.filter(_.id === 3L).map(row =&gt; row.name).updateStatement
+res34: String = update &quot;MY_PRODUCTS_TABLE&quot; set &quot;NAME&quot; = ? where &quot;MY_PRODUCTS_TABLE&quot;.&quot;ID&quot; = 3
+
+scala&gt; tq.deleteStatement
+res35: String = delete from &quot;MY_PRODUCTS_TABLE&quot;
+</code></pre><h2 id="Slick-from-the-REPL"><a href="#Slick-from-the-REPL" class="headerlink" title="Slick from the REPL"></a>Slick from the REPL</h2><p>When on the Play sbt/activator console, you can start an interactive Scala REPL console in the context of your current application by typing the command <code>console</code>. When starting a REPL, you first need to start your application and use a Session provider to be able to use the database.</p>
+<pre><code>import play.core.StaticApplication
+new StaticApplication(new java.io.File(&quot;.&quot;))
+</code></pre><p>This starts the application on the console. If you get messages about evolutions, run sbt with <code>-DapplyEvolutions.default=true</code> (see also <a href="https://playlatam.wordpress.com/2012/04/01/play-framework-2-quicktip-interactively-play-with-your-application-from-the-scala-console/" target="_blank" rel="external">this blog post</a>).</p>
+<p>Now, grab a <code>Session</code>:</p>
+<pre><code>import models._, play.api.Play.current, scala.slick.jdbc.JdbcBackend.Session, play.api.db.slick.Config.driver.simple._
+
+play.api.db.slick.DB.withSession {implicit session: Session =&gt; 
+    // your code
+}
+</code></pre><p>Or create a new session and pass that every time you need it (you don’t want to use that wrapper all the time in the REPL!):</p>
+<pre><code>val session = play.api.db.slick.DB.createSession
+TableQuery[Products].list(session) // example usage
+TableQuery[Products].insert((1, &quot;name&quot;, &quot;description&quot;))(session) // example insert
+</code></pre><p>Since the session can be passed as an implicit val, we can also do this, and avoid passing it altogether:</p>
+<pre><code>implicit val session = play.api.db.slick.DB.createSession
+TableQuery[Products].list // example usage
+TableQuery[Products].insert(1, &quot;name&quot;, &quot;description&quot;) // example insert
+</code></pre><h3 id="Loading-a-helper-from-the-REPL"><a href="#Loading-a-helper-from-the-REPL" class="headerlink" title="Loading a helper from the REPL"></a>Loading a helper from the REPL</h3><p>Typing all of this into the REPL gets tiring, so one last thing to make our lives easier: we’ll create a Scala script and load it from the Scala REPL.</p>
+<pre><code>import play.core.StaticApplication, models._, play.api.Play.current, scala.slick.jdbc.JdbcBackend.Session, play.api.db.slick.Config.driver.simple._
+
+try {
+  new StaticApplication(new java.io.File(&quot;.&quot;))
+} catch {
+  case e: play.api.db.evolutions.InvalidDatabaseRevision =&gt; {
+    println(&quot;\n\n\n WARNING: You should run sbt with the -DapplyEvolutions.default=true switch to automatically apply evolutions!&quot;)
+    println(&quot;Currently, the database is in an invalid state, so queries won&apos;t work.&quot;)
+  }
+  case e : Throwable =&gt; throw e;
+}
+
+implicit val session = play.api.db.slick.DB.createSession
+val tq = TableQuery[Products]
+println(&quot;An implicit Session is now available&quot;)
+</code></pre><p>I saved it as <code>db.scala</code> in a folder <code>helpers</code> in my project root. You can now use the REPL’s special <code>:load</code> command to load it:</p>
+<p><img src="repl_zen.png" alt="A Scala console session where :load helpers/db.scala is performed as an example"></p>
+<h2 id="Classes-you’ll-meet"><a href="#Classes-you’ll-meet" class="headerlink" title="Classes you’ll meet"></a>Classes you’ll meet</h2><h3 id="The-Table-class"><a href="#The-Table-class" class="headerlink" title="The Table class"></a>The <code>Table</code> class</h3><h3 id="The-TableQuery-class"><a href="#The-TableQuery-class" class="headerlink" title="The TableQuery class"></a>The <code>TableQuery</code> class</h3><h3 id="The-ProvenShape-class"><a href="#The-ProvenShape-class" class="headerlink" title="The ProvenShape class"></a>The <code>ProvenShape</code> class</h3><h3 id="The-Rep-class"><a href="#The-Rep-class" class="headerlink" title="The Rep class"></a>The <code>Rep</code> class</h3><h2 id="The-big-O"><a href="#The-big-O" class="headerlink" title="The big O"></a>The big O</h2><p>Remember how we used <code>O.PrimaryKey</code> to set a field as a primary key? That <code>O</code> is defined <a href="http://slick.typesafe.com/doc/2.1.0/api/#scala.slick.profile.RelationalTableComponent$Table" target="_blank" rel="external">here</a> and contains some more interesting things for <code>JdbcProfile</code> (<a href="http://slick.typesafe.com/doc/2.1.0/schemas.html#table-rows" target="_blank" rel="external">official documentation here</a>, scroll down a little):</p>
+<ol>
+<li><code>O.PrimaryKey</code>: non-compound primary key</li>
+<li><code>O.Default[T](defaultValue: T)</code>: set a default value</li>
+<li><code>O.DBType(dbType: String)</code>: use a custom database type (e.g. <code>DBType(&quot;VARCHAR(20)&quot;)</code>)</li>
+<li><code>O.AutoInc</code>: automatically increment this field</li>
+<li><code>O.NotNull</code>: this field may not be null</li>
+<li><code>O.Nullable</code>: this field may be null</li>
+</ol>
+<p>Note on <code>O.NotNull</code> and <code>O.Nullable</code>: you should usually not specify these. Slick will use nullable database fields by default if you use an <code>Option</code> type.</p>
+<h3 id="Auto-increment"><a href="#Auto-increment" class="headerlink" title="Auto-increment"></a>Auto-increment</h3><p>We don’t always want to provide primary keys ourselves. Here, we want to save stores, but we’d rather have the database set the id:</p>
+<pre><code>case class Store(id: Long, name: String)
+
+class Stores(tag: Tag) extends Table[Store](tag, &quot;STORES&quot;) {
+  def id = column[Long](&quot;id&quot;, O.PrimaryKey, O.AutoInc)
+  def name = column[String](&quot;name&quot;)
+
+  def * = (id, name) &lt;&gt; (Store.tupled, Store.unapply _)
+}
+</code></pre><p>We just give the id the <code>AutoInc</code> option. If we insert a <code>Store</code>, we can see the database sets the id:</p>
+<pre><code>scala&gt; TableQuery[Stores] += Store(666, &quot;Eurostock&quot;)
+res0: Int = 1
+
+scala&gt; TableQuery[Stores].list
+res1: List[models.Stores#TableElementType] = List(Store(1,Eurostock))
+</code></pre><p>Note that the id we provided ourselves (<code>666</code>) gets ignored, erased if you will, and the database sets a new one.</p>
+<p>That’s not really kosher, we need to set an id that’s non-sensical, since it gets overwritten by the database. It would be much nicer if we could make this explicit in the type system. We’ll start with a new class that tracks locations:</p>
+<pre><code>case class Location(id: Long = None, address: String)
+</code></pre><p>It tracks locations with an id. Since we want this id to be set by the database, we’ll make it an <code>Option</code>:</p>
+<pre><code>case class Location(id: Option[Long] = None, address: String)
+</code></pre><p>We would like to our table to look like this:</p>
+<pre><code>class Locations(tag: Tag) extends Table[Location](tag, &quot;LOCATIONS&quot;) {
+  def id = column[Long](&quot;id&quot;, O.PrimaryKey, O.AutoInc)
+  def address = column[String](&quot;address&quot;)
+
+  def * = ???
+}
+</code></pre><p>So we save locations with an <code>id</code> <code>None</code>, and the database will generate an id. In case we insert a location with an id of <code>Some(x)</code>, it will be ignored and a new one will be generated. When we get data from the database, we want it to be of the correct type (<code>Location</code>), with the <code>id</code> being <code>Some(x)</code>. We can do that without a lot of pain, we define the <code>*</code> projection as</p>
+<pre><code>def * = (id.?, address) &lt;&gt; (Location.tupled, Location.unapply _)
+</code></pre><p>Note <code>id.?</code>: this method is defined on <a href="http://slick.typesafe.com/doc/2.1.0/api/#scala.slick.lifted.PlainColumnExtensionMethods" target="_blank" rel="external">PlainColumnExtensionMethods</a> and is used for <code>Option</code> types in the <code>*</code> projection.</p>
+<p>Now everything works as expected: we can pass in ids of <code>None</code> and we get back <code>Locations</code> with an <code>id</code> of <code>Some(x)</code>!</p>
+<pre><code>scala&gt; TableQuery[Locations] += Location(None, &quot;21 Jump Street&quot;)
+res2: Int = 1
+
+scala&gt; TableQuery[Locations].list
+res3: List[models.Locations#TableElementType] = List(Location(Some(1),21 Jump Street))
+</code></pre><h2 id="Multiple-primary-keys"><a href="#Multiple-primary-keys" class="headerlink" title="Multiple primary keys"></a>Multiple primary keys</h2><p>You can use the <code>primaryKey</code> method in your <code>Table</code> definition to define multiple primary keys, the syntax is:</p>
+<pre><code>def pk = primaryKey(&quot;pk_name_here&quot;, (someColumn, anotherColumn, oneMoreForGoodMeasure))
+</code></pre><h2 id="Mapping-columns"><a href="#Mapping-columns" class="headerlink" title="Mapping columns"></a>Mapping columns</h2><p>As mentioned before, you can’t store arbritrary types in the database. Those that can’t be saved have to be mapped either as a table (classes) or to other types. You can map a column using <a href="http://slick.typesafe.com/doc/2.1.0/api/index.html#scala.slick.memory.MemoryQueryingProfile$MappedColumnType" target="_blank" rel="external">MappedColumnType</a>.</p>
+<p>Let’s say we want to track events. We want to keep track of the id, description and timestamp of the event. The timestamp keeps track of when the event happened:</p>
+<pre><code>case class Event(id: Long, description: String, timestamp: java.util.Date)
+
+class Events(tag: Tag) extends Table[Event](tag, &quot;EVENTS&quot;) {
+  def id = column[Long](&quot;id&quot;, O.PrimaryKey)
+  def description = column[String](&quot;description&quot;)
+  def timestamp = column[java.util.Date](&quot;timestamp&quot;)
+
+  def * = (id, description, timestamp) &lt;&gt; (Event.tupled, Event.unapply _)
+}
+</code></pre><p>This won’t work, <code>java.util.Date</code> isn’t a type you can persist. So we’ll write a mapper from <code>java.util.Date</code> to <code>java.sql.Timestamp</code>. <code>java.util.Date</code> cannot be directly persisted in the database, so we “map” it to a type that can (and stores the same kind of data), <code>java.sql.Timestamp</code>. We could also have mapped the date to a <code>Long</code>, or to a <code>String</code>, but a timestamp is what we want.</p>
+<pre><code>implicit val javaUtilDateMapper = MappedColumnType.base[java.util.Date, java.sql.Timestamp] (
+    d =&gt; new java.sql.Timestamp(d.getTime),
+    d =&gt; new java.sql.Date(d.getTime)
+)
+</code></pre><ol>
+<li>We define this as an <code>implicit val</code>. This will allows us to ignore this is a mapped column for all practical purposes.</li>
+<li>The name we give this <code>val</code> doesn’t matter, but well-named things are nice</li>
+<li>We call the factory method <code>MappedColumnType.base[T,U](tmap: T =&gt; U, tcomap: U =&gt; T)</code>. <code>T</code> is the type we want to use externally, in this case, <code>java.util.Date</code>. <code>U</code> is what we want the database to use, here: <code>java.sql.Timestamp</code>. Then come <code>tmap</code> and <code>tcomap</code>, which are functions that define how to convert from <code>T</code> to <code>U</code> and back.</li>
+<li>We pass the conversion functions as anonymous functions.</li>
+</ol>
+<p>We’ll place this implicit in the table. The full code now looks like:</p>
+<pre><code>case class Event(id: Long, description: String, timestamp: java.util.Date)
+
+class Events(tag: Tag) extends Table[Event](tag, &quot;EVENTS&quot;) {
+    implicit val javaUtilDateMapper = MappedColumnType.base[java.util.Date, java.sql.Timestamp] (
+        d =&gt; new java.sql.Timestamp(d.getTime),
+        d =&gt; new java.sql.Date(d.getTime)
+    )
+    def id = column[Long](&quot;id&quot;, O.PrimaryKey)
+    def description = column[String](&quot;description&quot;)
+    def timestamp = column[java.util.Date](&quot;timestamp&quot;)
+
+    def * = (id, description, timestamp) &lt;&gt; (Event.tupled, Event.unapply _)
+}
+</code></pre><p>We can confirm this works:</p>
+<pre><code>scala&gt; val ev = TableQuery[Events]
+ev: scala.slick.lifted.TableQuery[models.Events] = scala.slick.lifted.TableQuery@626bcfa6
+
+scala&gt; ev += Event(1, &quot;Mainframe is down&quot;, new java.util.Date)
+res1: Int = 1
+
+scala&gt; ev.list
+res2: List[models.Events#TableElementType] = List(Event(1,Mainframe is down,2015-01-26))
+
+scala&gt; res2(0).timestamp
+res3: java.util.Date = 2015-01-26
+</code></pre><p>We pass in <code>java.util.Date</code>s and get back <code>java.util.Date</code>s, while not thinking about how it’s saved in the database!</p>
+<h2 id="Using-Global-scala-to-inject-sample-data"><a href="#Using-Global-scala-to-inject-sample-data" class="headerlink" title="Using Global.scala to inject sample data"></a>Using Global.scala to inject sample data</h2><ol>
+<li>Enable Global.scala in <code>application.scala</code></li>
+<li>Override <code>def onStart(app: Application)</code></li>
+</ol>
+<h2 id="What’s-“lifted-embedding”-What’s-“direct-embedding”"><a href="#What’s-“lifted-embedding”-What’s-“direct-embedding”" class="headerlink" title="What’s “lifted embedding”? What’s “direct embedding”?"></a>What’s “lifted embedding”? What’s “direct embedding”?</h2><h3 id="Lifted-embedding"><a href="#Lifted-embedding" class="headerlink" title="Lifted embedding"></a>Lifted embedding</h3><h3 id="Direct-embedding"><a href="#Direct-embedding" class="headerlink" title="Direct embedding"></a>Direct embedding</h3><h2 id="Connecting-to-a-different-database-engine"><a href="#Connecting-to-a-different-database-engine" class="headerlink" title="Connecting to a different database engine"></a>Connecting to a different database engine</h2><h3 id="MySQL"><a href="#MySQL" class="headerlink" title="MySQL"></a>MySQL</h3><h3 id="Supported-engines"><a href="#Supported-engines" class="headerlink" title="Supported engines"></a>Supported engines</h3>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/slick-with-play/" data-id="ciqu2unwq00095ulk5boqudvk" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/slick-with-play/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/play-framework-ci/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Continuous integration for Play! Framework 2 with Digital Ocean
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/asp_net_annoyances/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">My annoyances with ASP.NET MVC 5</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2015/slick-with-play/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

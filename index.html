@@ -1,0 +1,643 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Personal blog of Thomas Toye. I&apos;m a student interested in back-end web development, functional programming, and other cool stuff.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Thomas Toye">
+<meta property="og:url" content="http://thomastoye.be/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="Personal blog of Thomas Toye. I&apos;m a student interested in back-end web development, functional programming, and other cool stuff.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Thomas Toye">
+<meta name="twitter:description" content="Personal blog of Thomas Toye. I&apos;m a student interested in back-end web development, functional programming, and other cool stuff.">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-libreoffice-mail-merge" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/libreoffice-mail-merge/" class="article-date">
+  <time datetime="2016-07-19T20:24:09.000Z" itemprop="datePublished">2016-07-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I recently had a situation where I wanted to quickly export data from a database source to PDFs. I wanted to create a document for each volunteer where they could check their information and other details. I could have solved this with a Node.js script or using a JVM library, but I decided to try something new for me: the capabilities of a standard office suite. Preferring FOSS, LibreOffice was the logical choice. I was surprised by how easy and fluently everything went and I will definitely consider this for similar future projects.</p>
+<p>A big advantage of using this over packages like <a href="https://www.npmjs.com/package/pdfkit">pdfkit</a>, <a href="https://www.npmjs.com/package/html-pdf">html-pdf</a> and <a href="https://www.npmjs.com/package/lx-pdf">lx-pdf</a> is that you get the full capabilities of a word processor. Helps a lot if you have a standard template you need to adhere to: perfectly recreating such a template in HTML or instructions may take a lot of time.</p>
+<p><img src="/2016/libreoffice-mail-merge/writer-export-result.png" alt="The end result: individual PDFs with dynamically generated data from a PostgreSQL source"></p>
+        
+          <p class="article-more-link">
+            <a href="/2016/libreoffice-mail-merge/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2016/libreoffice-mail-merge/" data-id="ciqu3eshh000c5ulkxbnrna49" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2016/libreoffice-mail-merge/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-how-i-manage-my-music" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2016/how-i-manage-my-music/" class="article-date">
+  <time datetime="2016-01-04T18:14:57.000Z" itemprop="datePublished">2016-01-04</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I wanted to take the time to talk about how I manage my music on Linux. I use the following tools:</p>
+<ul>
+<li><a href="http://thomas.apestaart.org/morituri/trac/"><code>morituri</code></a>, to rip CDs,</li>
+<li><a href="http://beets.radbox.org/"><code>beets</code></a>, to manage my music library,</li>
+<li><a href="http://beets.radbox.org/"><code>mopidy</code></a>, as a music server,</li>
+<li><a href="http://rybczak.net/ncmpcpp/"><code>ncmpcpp</code></a>, as a music server client,</li>
+<li><a href="http://arachnoid.com/android/SSHelper/"><code>SSHelper</code></a> and <a href="https://rsync.samba.org/"><code>rsync</code></a>, to sync music to my phone.</li>
+</ul>
+<p><img src="/2016/how-i-manage-my-music/ncmpcpp.png" alt="ncmpcpp with mopidy as a server, listing artists, albums and tracks"></p>
+        
+          <p class="article-more-link">
+            <a href="/2016/how-i-manage-my-music/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2016/how-i-manage-my-music/" data-id="ciqu2unw100055ulk4eim90z3" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2016/how-i-manage-my-music/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-using-macwire-di-in-an-existing-play-framework-2-3-application" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/" class="article-date">
+  <time datetime="2015-05-08T16:58:09.000Z" itemprop="datePublished">2015-05-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I wanted to convert a project of mine to use dependency injection in Play, and I settled on <a href="https://github.com/adamw/macwire">MacWire</a>. I will confess that I don’t have a lot of experience with DI, and that it wasn’t easy to wrap my head around at first.</p>
+<p><img src="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/final.png" alt="The final product"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/" data-id="ciqu2unx6000a5ulk2w6wjjvy" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-dutch-spell-checking-for-IntelliJ-IDEA" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/" class="article-date">
+  <time datetime="2015-04-27T16:23:37.000Z" itemprop="datePublished">2015-04-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I got really annoyed by the spell checking feature of IntelliJ IDEA, since I’m a native Dutch speaker and I have a few projects where the main language is Dutch. I originally planned to just disable it after I noticed there was no Dutch dictionary available, but I decided to try and create one.</p>
+        
+          <p class="article-more-link">
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/dutch-spell-checking-for-IntelliJ-IDEA/" data-id="ciqu2unvq00025ulkr7so0nuq" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/dutch-spell-checking-for-IntelliJ-IDEA/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ldap-with-python-and-ad" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/ldap-with-python-and-ad/" class="article-date">
+  <time datetime="2015-04-02T10:00:00.000Z" itemprop="datePublished">2015-04-02</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>For a school project, we have to implement LDAP authentication in <a href="https://www.edx.org/">edX</a>. edX is buildt on Django and Python, so I decided to explore how to implement LDAP with Python.</p>
+<p>I’m not a Microsoft fan, but to mirror the deployment set-up, we decided to use Microsoft Server with Active Directory.</p>
+<p><img src="/2015/ldap-with-python-and-ad/example.png" alt="An example of how it will work"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/ldap-with-python-and-ad/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/ldap-with-python-and-ad/" data-id="ciqu2unwl00085ulk2csciyye" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/ldap-with-python-and-ad/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-my-fresh-server-setup-steps" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/my-fresh-server-setup-steps/" class="article-date">
+  <time datetime="2015-03-31T11:43:14.000Z" itemprop="datePublished">2015-03-31</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/my-fresh-server-setup-steps/">My fresh server setup steps</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>These are the steps I take after I image a new server. These are mainly personal notes, but I imagine someone else might be interested in my process.</p>
+<p><img src="/2015/my-fresh-server-setup-steps/final-product.png" alt="The final product"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/my-fresh-server-setup-steps/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/my-fresh-server-setup-steps/" data-id="ciqu2unw000045ulk9umwpom0" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/my-fresh-server-setup-steps/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-play-framework-cd" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/play-framework-cd/" class="article-date">
+  <time datetime="2015-03-27T15:00:00.000Z" itemprop="datePublished">2015-03-27</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/play-framework-cd/">Continuous deployment for Play! Framework 2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>In a <a href="/2015/play-framework-ci/">previous blog post</a>, I discussed setting up Jenkins for continuous integration with Play. But today will go one step further: we will contiously deploy our application.</p>
+<h2 id="A-high-level-overview"><a href="#A-high-level-overview" class="headerlink" title="A high-level overview"></a>A high-level overview</h2><p>In this article, we will set up a Digital Ocean droplet with <a href="https://github.com/progrium/dokku">Dokku</a>, a project that brings a Heroku-like PaaS server to your own systems. This means that you can just “push to deploy”: when you push a new commit, it gets deployed on the server.</p>
+<p>After we set up Dokku, we will integrate Jenkins and Dokku, for a full pipeline: Jenkins will push to Dokku, which will deploy the application. This is continuous deployment (also known as continuous delivery). We will polish this a bit, so Dokku uses a persistant production database, add a <code>CHECKS</code> file so that instances that aren’t ready don’t go live, and discuss how to use different database types for testing and production.</p>
+<p>The end result will be that a single commit starts a whole process: firstly, the code goes live on GitHub, then Jenkins builds and tests the application, then it goes live if the lights are green.</p>
+<p><img src="/2015/play-framework-cd/header.png" alt="An example of Dokku at work"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/play-framework-cd/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/play-framework-cd/" data-id="ciqu2unwj00065ulk0il6ei4s" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/play-framework-cd/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-play-framework-ci" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/play-framework-ci/" class="article-date">
+  <time datetime="2015-03-17T11:00:00.000Z" itemprop="datePublished">2015-03-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/play-framework-ci/">Continuous integration for Play! Framework 2 with Digital Ocean</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>GitHub offers a <a href="https://education.github.com/pack">student pack</a> to those who are still studying. Among the long list is $100 in credit for <a href="https://cloud.digitalocean.com">Digital Ocean</a>. I took the opportunity to try out continuous integration with <a href="https://www.playframework.com/">Play! 2</a> and <a href="https://jenkins-ci.org/">Jenkins</a>.</p>
+<p><img src="/2015/play-framework-ci/header.png" alt="What we&#39;re going to build here"></p>
+        
+          <p class="article-more-link">
+            <a href="/2015/play-framework-ci/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/play-framework-ci/" data-id="ciqu2unwk00075ulkw2i8dpqy" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/play-framework-ci/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-slick-with-play" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/slick-with-play/" class="article-date">
+  <time datetime="2015-02-14T23:00:00.000Z" itemprop="datePublished">2015-02-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/slick-with-play/">Slick 2.1 zero to hero</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>(Note: I do not plan to work any more on this post. I will probably rewrite it for Slick 3 when I find the time.)</p>
+<p>As I wanted to get started with Slick, I faced a problem every Slick padawan faces: the almost complete lack of resources. There’s a rather confusing Activator tutorial, <a href="http://slick.typesafe.com/doc/2.1.0/">some docs</a>, the generated <a href="http://slick.typesafe.com/doc/2.1.0/api/#package">ScalaDoc</a>, and <a href="https://mackler.org/LearningSlick2/">Adam Mackler’s Learning Slick</a>. But that’s it. And I found neither of those to be particulary easy to read.</p>
+<p>But the situation is improving, the official docs now mostly contain everything you should now, though there is no real “path” to follow, and you can’t possibly learn it all in one go. Play will probably bring an influx of new Slick users, which will help with the ecosystem.</p>
+<p>Here’s my try at a easy to follow tutorial that will help you to get started with Slick. Be sure to leave any comments, remarks… Pull requests are also much appreciated!</p>
+<p>There’s a number of links to the Slick source code. Since most of them refer to line numbers, I linked to the state of a specific commit on GitHub, so we’re both looking at the same thing, even when the code is updated.</p>
+<p>This post focuses mainly on using Slick with Play!2.0</p>
+        
+          <p class="article-more-link">
+            <a href="/2015/slick-with-play/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/slick-with-play/" data-id="ciqu2unwq00095ulk5boqudvk" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/slick-with-play/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-asp_net_annoyances" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/asp_net_annoyances/" class="article-date">
+  <time datetime="2015-02-09T11:00:00.000Z" itemprop="datePublished">2015-02-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2015/asp_net_annoyances/">My annoyances with ASP.NET MVC 5</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>After working in college with ASP.NET MVC 5 for a year, I found it to be a modern and decent framework. I still have some gripes with it, which I will outline in this post.</p>
+        
+          <p class="article-more-link">
+            <a href="/2015/asp_net_annoyances/#more">Read More</a>
+          </p>
+        
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/asp_net_annoyances/" data-id="ciqu2unvu00035ulkzx7n7oyg" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/asp_net_annoyances/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+  
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>

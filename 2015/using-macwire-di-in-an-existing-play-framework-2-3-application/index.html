@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Using MacWire DI in an existing Play! Framework 2.3 application | Thomas Toye</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="I wanted to convert a project of mine to use dependency injection in Play, and I settled on MacWire. I will confess that I don’t have a lot of experience with DI, and that it wasn’t easy to wrap my he">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Using MacWire DI in an existing Play! Framework 2.3 application">
+<meta property="og:url" content="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/index.html">
+<meta property="og:site_name" content="Thomas Toye">
+<meta property="og:description" content="I wanted to convert a project of mine to use dependency injection in Play, and I settled on MacWire. I will confess that I don’t have a lot of experience with DI, and that it wasn’t easy to wrap my he">
+<meta property="og:image" content="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/final.png">
+<meta property="og:updated_time" content="2016-04-26T08:14:35.783Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Using MacWire DI in an existing Play! Framework 2.3 application">
+<meta name="twitter:description" content="I wanted to convert a project of mine to use dependency injection in Play, and I settled on MacWire. I will confess that I don’t have a lot of experience with DI, and that it wasn’t easy to wrap my he">
+<meta name="twitter:image" content="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/final.png">
+  
+  
+  <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css">
+  
+<!-- Google Analytics -->
+<script type="text/javascript">
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+ga('create', 'UA-48804932-1', 'auto');
+ga('send', 'pageview');
+
+</script>
+<!-- End Google Analytics -->
+
+
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Thomas Toye</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">def programmer: (Air =&gt; Code) = ???</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+          <a class="main-nav-link" href="https://github.com/thomastoye">Github</a>
+        
+          <a class="main-nav-link" href="http://registry.jsonresume.org/thomastoye">Resume</a>
+        
+          <a class="main-nav-link" href="http://www.last.fm/user/siyck">last.fm</a>
+        
+          <a class="main-nav-link" href="mailto:toye.thomas@gmail.com">Mail</a>
+        
+          <a class="main-nav-link" href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60">GPG Key</a>
+        
+          <a class="main-nav-link" href="http://facebook.com/thomas.toye">Facebook</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" results="0" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://thomastoye.be"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-using-macwire-di-in-an-existing-play-framework-2-3-application" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/" class="article-date">
+  <time datetime="2015-05-08T16:58:09.000Z" itemprop="datePublished">2015-05-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Using MacWire DI in an existing Play! Framework 2.3 application
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>I wanted to convert a project of mine to use dependency injection in Play, and I settled on <a href="https://github.com/adamw/macwire" target="_blank" rel="external">MacWire</a>. I will confess that I don’t have a lot of experience with DI, and that it wasn’t easy to wrap my head around at first.</p>
+<p><img src="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/final.png" alt="The final product"></p>
+<a id="more"></a>
+<h1 id="Getting-started"><a href="#Getting-started" class="headerlink" title="Getting started"></a>Getting started</h1><h2 id="Add-the-MacWire-dependency"><a href="#Add-the-MacWire-dependency" class="headerlink" title="Add the MacWire dependency"></a>Add the MacWire dependency</h2><p>In your <code>build.sbt</code>, add the following dependency:</p>
+<pre><code>&quot;com.softwaremill.macwire&quot; %% &quot;macros&quot; % &quot;1.0.1&quot;
+</code></pre><h2 id="Make-controllers-classes-and-pass-dependencies-as-constructor-parameters"><a href="#Make-controllers-classes-and-pass-dependencies-as-constructor-parameters" class="headerlink" title="Make controllers classes and pass dependencies as constructor parameters"></a>Make controllers classes and pass dependencies as constructor parameters</h2><p>Your controllers probably look a little like this:</p>
+<pre><code>package controllers
+
+import models.json.AnimatorJson.animatorWrites
+import models.repository.AnimatorRepository
+import play.api.db.slick.DBAction
+import play.api.libs.json.Json
+import play.api.mvc._
+
+object ApiAnimators extends Controller {
+  val animatorRepo = new AnimatorRepository
+
+  def allAnimators = DBAction { implicit req =&gt;
+    Ok(Json.toJson(animatorRepo.findAll(req.dbSession)))
+  }
+
+  def animatorById(id: Long) = DBAction { implicit req =&gt;
+    animatorRepo.findById(id)(req.dbSession).fold(BadRequest()) { animator =&gt;
+      Ok(Json.toJson(animator))
+    }
+  }
+}
+</code></pre><p>Not a whole lot to see here: controllers are objects that extend from <code>Controller</code> and are in the <code>controllers</code> package. We can see a dependency here: <code>AnimatorRepository</code>. We want to make this dependency explicit. The way we do that is by passing in through the constructor. Since <code>object</code>s have no constructor, we make the controller a class instead:</p>
+<pre><code>class ApiAnimators(animatorRepo: AnimatorRepository) extends Controller {
+  def allAnimators = DBAction { implicit req =&gt;
+    Ok(Json.toJson(animatorRepo.findAll(req.dbSession)))
+  }
+
+  def animatorById(id: Long) = DBAction { implicit req =&gt;
+    animatorRepo.findById(id)(req.dbSession).fold(BadRequest()) { animator =&gt;
+      Ok(Json.toJson(animator))
+    }
+  }
+}
+</code></pre><h2 id="Wire-up"><a href="#Wire-up" class="headerlink" title="Wire up"></a>Wire up</h2><p>Create an object <code>Application</code> in the root package. This is where we’ll wire up our dependencies.</p>
+<pre><code>import com.softwaremill.macwire._
+import models.repository.ChildRepository
+import controllers.ApiChildren
+
+object Application {
+  lazy val animatorRepo = wire[AnimatorRepository]
+  lazy val animatorController = wire[ApiAnimators]
+}
+</code></pre><h2 id="Update-your-Global-object"><a href="#Update-your-Global-object" class="headerlink" title="Update your Global object"></a>Update your Global object</h2><p>If you don’t have one yet, create a <code>Global</code> object in the package root. Extend <code>GlobalSettings</code> with <code>Macwire</code>:</p>
+<pre><code>import play.api._
+import com.softwaremill.macwire.{InstanceLookup, Macwire}
+
+object Global extends GlobalSettings with Macwire {
+    val wired = wiredInModule(Application)
+    override def getControllerInstance[A](controllerClass: Class[A]) = wired.lookupSingleOrThrow(controllerClass)
+}
+</code></pre><h2 id="Update-your-routes"><a href="#Update-your-routes" class="headerlink" title="Update your routes"></a>Update your routes</h2><p>One more thing before our code will compile: updating our routes. It’s only a small change though: adding an <code>@</code> sign before the controllers that are now instantiated through MacWire:</p>
+<pre><code># Before
+GET           /api/animator/all         controllers.ApiAnimators.allAnimators
+GET           /api/animator/:id         controllers.ApiAnimators.animatorById(id: Long)
+
+# After                             ---v---
+GET           /api/animator/all        @controllers.ApiAnimators.allAnimators
+GET           /api/animator/:id        @controllers.ApiAnimators.animatorById(id: Long)
+</code></pre><p>Your application should now compile and run fine!</p>
+<h1 id="Testing"><a href="#Testing" class="headerlink" title="Testing"></a>Testing</h1><p>Now that we pass an explicit <code>AnimatorRepository</code> into the controller, we’ll have an easier time testing.</p>
+<h2 id="Extract-an-interface-out-of-what-you-want-to-test"><a href="#Extract-an-interface-out-of-what-you-want-to-test" class="headerlink" title="Extract an interface out of what you want to test"></a>Extract an interface out of what you want to test</h2><p>Before we can jump into testing, we need to extract an interface so they can be easily mocked and stubbed. It’s not really necessary for what we’re going to do in the next section, but you will need this if you have a services layer.</p>
+<p>In IntelliJ IDEA, you can go to the class (<code>AnimatorRepository</code>) and extract and interface out of it (<em>Right-click</em> &gt; <em>Refactor</em> &gt; <em>Extract</em> &gt; <em>Trait…</em>).</p>
+<p>The trait I use as an interface now looks like this:</p>
+<pre><code>import models.Animator
+import play.api.db.slick.Config.driver.simple._
+
+trait AnimatorRepository {
+  def findById(id: Long)(implicit s: Session): Option[Animator]
+  def findAll(implicit s: Session): List[Animator]
+  def insert(animator: Animator)(implicit s: Session): Unit
+  def count(implicit s: Session): Int
+  def update(animator: Animator)(implicit s: Session): Unit
+}
+</code></pre><p>Notice the name. The implementation will be renamed to <code>SlickAnimaterRepository</code>. Don’t forget to update your wiring in your <code>Application.scala</code>, while the controllers get passed in the trait (yay polymorphism).</p>
+<p>Side note: there’s a bit of code smell here: the explicit Slick <code>Session</code>. I might fix this later, but since the implementation overrides these methods, it needs the same method signatures.</p>
+<p>Implementation of the trait:</p>
+<pre><code>class SlickAnimatorRepository extends AnimatorRepository {
+  val animators = TableQuery[AnimatorTable]
+
+  override def findById(id: Long)(implicit s: Session): Option[Animator] = animators.filter(_.id === id).firstOption
+
+  override def findAll(implicit s: Session): List[Animator] = animators.list
+
+  override def insert(animator: Animator)(implicit s: Session): Unit = animators.insert(animator)
+
+  override def count(implicit s: Session): Int = animators.length.run
+
+  override def update(animator: Animator)(implicit s: Session): Unit = ??? // omitted
+}
+</code></pre><h2 id="Tests"><a href="#Tests" class="headerlink" title="Tests"></a>Tests</h2><p>Now we can write some tests! First, the setup:</p>
+<pre><code>import java.time.LocalDate
+
+import controllers.ApiAnimators
+import models.Animator
+import models.repository.AnimatorRepository
+import models.json.AnimatorJson.animatorReads
+import org.junit.runner._
+import org.specs2.mock._
+import org.specs2.runner._
+import play.api.test._
+
+@RunWith(classOf[JUnitRunner])
+class AnimatorControllerTest extends PlaySpecification with Mockito {
+    // test methods go here
+}
+</code></pre><p>Here, we’re using specs2 and Mockito. Let’s see how we’ll write our test methods:</p>
+<pre><code>&quot;Requesting an all animators&quot; should {
+  &quot;Return a correct response&quot; in new WithApplication {
+    val mockedRepo = mock[AnimatorRepository]
+    mockedRepo.findAll(org.mockito.Matchers.any()) returns List(exampleAnimator)
+
+    val animatorController = new ApiAnimators(mockedRepo)
+
+    val result = animatorController.allAnimators.apply(FakeRequest())
+
+    status(result) must be equalTo OK
+    contentType(result).map { res =&gt; res must be equalTo &quot;application/json&quot; }
+
+    val validated = contentAsJson(result).validate[Seq[Animator]]
+    validated.isSuccess must beTrue
+    validated.get must be equalTo Seq(exampleAnimator)
+  }
+}
+</code></pre><p>What’s going on here?</p>
+<ul>
+<li>Notice the <code>WithApplication</code>: our controllers needs a running <code>Application</code> or it will burn up at runtime with a <code>There is no started application</code> message</li>
+<li>We mock the repository using <code>mock[AnimatorRepository]</code>. Then we stub a call to <code>findAll</code> with a list with a single example</li>
+<li>The stub will catch all calls, thanks to the <code>Matchers.any()</code>. You can read more about mocking and stubbing with Mockito <a href="https://etorreborre.github.io/specs2/guide/SPECS2-3.6/org.specs2.guide.UseMockito.html" target="_blank" rel="external">here</a>.</li>
+<li>Then we get to our assertions: we check the status and content type that is returned. You can find these in <a href="https://www.playframework.com/documentation/2.3.x/api/scala/index.html#play.api.test.ResultExtractors" target="_blank" rel="external"><code>play.api.test.ResultExtractors</code></a>.</li>
+<li>As the last assert, we read the JSON and try to parse it, then check if it equals what we originally passed in.</li>
+</ul>
+<p>That concludes this blog post on using MacWire DI with Play. I hope it helped you to write better code!</p>
+<h1 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h1><ul>
+<li><a href="https://github.com/adamw/macwire-activator" target="_blank" rel="external">macwire-activator on Github</a>: an example project that shows how to use MacWire with Play! 2</li>
+<li><a href="http://www.warski.org/blog/2013/08/dependency-injection-in-play-with-macwire/" target="_blank" rel="external">Dependency Injection in Play! with MacWire</a>: this blog post is from 2013 and about MacWire 0.4, still mostly relevant</li>
+<li><a href="http://di-in-scala.github.io/" target="_blank" rel="external">DI in Scala: Guide</a>: general introduction to MacWire and DI in Scala</li>
+<li><a href="http://www.warski.org/blog/2014/02/using-scala-traits-as-modules-or-the-thin-cake-pattern/" target="_blank" rel="external">Using Scala traits as modules, or the “Thin Cake” Pattern</a>: introduces the “traits as modules” pattern (which wasn’t used here), as seen in the Activator template</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/" data-id="ciqu2unx6000a5ulk2w6wjjvy" class="article-share-link">Share</a>
+      
+        <a href="http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/#disqus_thread" class="article-comment-link">Comments</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/how-i-manage-my-music/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          How I manage my music on Linux
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Dutch spell checking for IntelliJ IDEA</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+<section id="comments">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/07/">July 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2016/01/">January 2016</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/05/">May 2015</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/04/">April 2015</a><span class="archive-list-count">2</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/03/">March 2015</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2015/02/">February 2015</a><span class="archive-list-count">2</span></li></ul>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recents</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2016/libreoffice-mail-merge/">Creating documents from a template using LibreOffice&#39;s &#39;mail merge&#39; feature</a>
+          </li>
+        
+          <li>
+            <a href="/2016/how-i-manage-my-music/">How I manage my music on Linux</a>
+          </li>
+        
+          <li>
+            <a href="/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/">Using MacWire DI in an existing Play! Framework 2.3 application</a>
+          </li>
+        
+          <li>
+            <a href="/2015/dutch-spell-checking-for-IntelliJ-IDEA/">Dutch spell checking for IntelliJ IDEA</a>
+          </li>
+        
+          <li>
+            <a href="/2015/ldap-with-python-and-ad/">Python LDAP authentication with Microsoft Active Directory</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2016 Thomas Toye<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+    <a href="https://github.com/thomastoye" class="mobile-nav-link">Github</a>
+  
+    <a href="http://registry.jsonresume.org/thomastoye" class="mobile-nav-link">Resume</a>
+  
+    <a href="http://www.last.fm/user/siyck" class="mobile-nav-link">last.fm</a>
+  
+    <a href="mailto:toye.thomas@gmail.com" class="mobile-nav-link">Mail</a>
+  
+    <a href="https://gist.github.com/thomastoye/a080ec1890fc86e34b60" class="mobile-nav-link">GPG Key</a>
+  
+    <a href="http://facebook.com/thomas.toye" class="mobile-nav-link">Facebook</a>
+  
+</nav>
+    
+<script>
+  var disqus_shortname = 'thomastoye';
+  
+  var disqus_url = 'http://thomastoye.be/2015/using-macwire-di-in-an-existing-play-framework-2-3-application/';
+  
+  (function(){
+    var dsq = document.createElement('script');
+    dsq.type = 'text/javascript';
+    dsq.async = true;
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+  })();
+</script>
+
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+  </div>
+</body>
+</html>
